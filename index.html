@@ -17,7 +17,7 @@
     </head>
     <body>
 
-        <div class="header">
+        <header class="header">
             <div class="header-inner container clear">
                 <a class="logo-container" href="/">
                     <div class="logo"></div>
@@ -29,7 +29,7 @@
                         <span class="sr">Navigation</span>
                     </span>
                 </label>
-                <div class="navigation">
+                <nav class="navigation">
                     <ul class="navigation-menu">
                         <li class="navigation-item"><a href="/">Home</a></li>
                         <li class="navigation-item"><a href="/blog">My Blog</a></li>
@@ -37,12 +37,24 @@
                         <li class="navigation-item"><a href="/profile">Profile</a></li>
                         <li class="navigation-item"><a href="/logout">Logout</a></li>
                     </ul>
-                </div>
+                </nav>
             </div>
-        </div>
+        </header>
+
+        <main class="row container clear">
+            <aside class="left-content col-3-desktop col-12">
+                <h4>Last Tags</h4>
+            </aside>
+            
+            <section class="main-content col-6-desktop col-12"><h4>Stream</h4></section>
+            
+            <aside class="right-content col-3-desktop col-12">
+                <h4>Search</h4>
+            </aside>
+        </main>
 
         <footer class="container clear">
-            <div class="footer-column col-tablet-12">
+            <div class="footer-column col-12">
                 <p>&copy; Copyright 2015 &mdash; Matej Hočevar</p>
             </div>
         </footer>

@@ -1,54 +1,46 @@
-// ==========================================================================
+@import "base/_variables";
 
-// Base Stylesheet - http://getbase.org
-// Author: Matthew Hartman - http://www.matthewhartman.com.au/
-// Version: 2.5.3 - Last Updated: October 19, 2015
+@import "base/_mixins";
+@import "base/_resets";
 
-// ==========================================================================
-  
-  @import "base/_variables";
+@import "base/_global";
+@import "base/_lists";
+@import "base/_blockquotes";
+@import "base/_tables";
+@import "base/_code";
+@import "base/_forms";
 
-  @import "base/_mixins";
-  @import "base/_resets";
+@import "base/_assets";
 
-  @import "base/_global";
-  @import "base/_lists";
-  @import "base/_blockquotes";
-  @import "base/_tables";
-  @import "base/_code";
-  @import "base/_forms";
-  
-  @import "base/_assets";
+@import "base/_grid";
+// @import "base/_grid-non-responsive";
 
-  @import "base/_grid";
-  // @import "base/_grid-non-responsive";
+// Helpers
+@import "base/_helpers";
 
-  // Helpers
-  @import "base/_helpers";
+@import "_mobile-styles";
 
-  @import "_mobile-styles";
+// Tablet Styles
+@media only screen and (min-width: @breakpoint-tablet) {
+@import "_tablet-styles";
+}
 
-  // Tablet Styles
-  @media only screen and (min-width: @breakpoint-tablet) {
-	@import "_tablet-styles";
-  }
+// Desktop Styles
+@media only screen and (min-width: @breakpoint-desktop) {
+@import "_desktop-styles";
+}
 
-  // Desktop Styles
-  @media only screen and (min-width: @breakpoint-desktop) {
-	@import "_desktop-styles";
-  }
+// HD Styles
+@media only screen and (min-width: @breakpoint-hd) {
+@import "_hd-styles";
+}
 
-  // HD Styles
-  @media only screen and (min-width: @breakpoint-hd) {
-	@import "_hd-styles";
-  }
+// Animations
+@import "base/_animations";
 
-  // Animations
-  @import "base/_animations";
+// Printer Styles
+@media print {
+@import "base/_print";
+}
 
-  // Printer Styles
-  @media print {
-	@import "base/_print";
-  }
-
-  @import "navigation.less";
+@import "navigation.less";
