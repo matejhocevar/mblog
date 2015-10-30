@@ -144,10 +144,8 @@
 		margin: 10px 0;
 		
 		& > a {
-			font-size: 16px;
-			font-size: 1rem;
+			font-size: @nav-font-size;
 			line-height: 20px;
-			line-height: 1.25rem;
 			font-weight: 700;
 			display: block;
 			color: @base-font-color;
@@ -165,7 +163,7 @@
 
 @media only screen and (min-width: 740px) {
 	.header {
-		padding-top: 40px;
+		padding-top: 20px;
 		padding-bottom: 20px;
 	}
 	.navigation-toggle-label {
@@ -195,8 +193,8 @@
 		margin: 0 10px;
 	}
 	.navigation-menu .navigation-item > a {
-		font-size: 15px;
-		line-height: 15px;
+		font-size: @base-font-size;
+		line-height: @base-font-size;
 		color: @base-font-color;
 		padding: 10px 0;
 		position: relative;
@@ -227,7 +225,7 @@
 
 @media only screen and (min-width: 980px) {
 	.header {
-		padding-top: 40px;
+		padding-top: 20px;
 	}
 	.header-inner {
 		padding-left: 15px;

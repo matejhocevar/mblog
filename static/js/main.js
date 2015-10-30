@@ -17,13 +17,13 @@ $(document).ready(function() {
 });
 
 function updateApp() {
-	updateTags();
+	updateLinks();
 	updateDates();
 }
 
 function newBlogPost(displayName, username, time, content) {
 	var r = parseInt(Math.random() * 1000000, 10);
-	var newPost = '<article post-id="' + r + '" class="blog-post"><header><a href="/profile/' + username + '" class="post-author" rel="author"><b>' + displayName + '</b> @' + username + '</a><time class="post-date" post-date="' + time + '"></time></header><p class="post-content">' + tags(content) + '</p></article>';
+	var newPost = '<article post-id="' + r + '" class="blog-post"><header><a href="/profile/' + username + '" class="post-author" rel="author"><b>' + displayName + '</b> @' + username + '</a><time class="post-date" post-date="' + time + '"></time></header><p class="post-content">' + urls(content) + '</p></article>';
 	$(".articles").prepend(newPost).slideDown('slow');
 	dateMe($("[post-id='" + r + "'] .post-date"));
 }
@@ -34,23 +34,35 @@ function updateDates() {
 	});
 }
 
-function updateTags() {
-	$(".post-content").each(function(i, el){
-		$(el).html(tags($(el).text()));
-	});
-}
-
 function dateMe(obj) {
 	var dateFormat = "YYYY-MM-DD HH:mm:ss";
 	$(obj).text(moment($(obj).attr("post-date"), dateFormat).fromNow());
 }
 
-function tags(str) {
-	return str.replace(/(^|\s)([#@][a-z\d-]+)/g, function(){ 
-		var arg = arguments[2];
-		var type = arg[0];
-		var tag = arg.substring(1);
-		var link = type=="@"?"profile":"tag";
-		return " <a href='/" + link + "/" + tag + "'>" + arg + "</a>";
+function updateLinks() {
+	$(".post-content").each(function(i, el){
+		$(el).html(urls($(el).text()));
+	});
+}
+
+function urls(str) {
+	return Autolinker.link( str, {
+		replaceFn : function( autolinker, match ) {
+			switch( match.getType() ) {
+				case 'twitter' :
+					var userHandle = match.getTwitterHandle();
+
+					return '<a href="/profile/' + userHandle + '">@' + userHandle + '</a>';
+
+				case 'hashtag' :
+					var hashtag = match.getHashtag();
+					console.log( hashtag );
+
+					return '<a href="/tags/' + hashtag + '">#' + hashtag + '</a>';
+
+			}
+		},
+		truncate: 25,
+		hashtag: 'twitter'
 	});
 }
