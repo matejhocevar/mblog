@@ -13,6 +13,7 @@ $(document).ready(function() {
 		var content = $("#post-new").val();
 		newBlogPost("Surname Lastname", "username", nowDate, content);
 		$("#post-new").val("");
+		// TODO: when post you need to scroll to top, so user can see their post being published
 	});
 
 	initScrollbar();
@@ -25,7 +26,7 @@ $(document).resize(function(){
 $(".articles").scroll(function(e) {
 	if ($(".articles").scrollTop() === $(".articles").prop('scrollHeight') - $(".articles").height()) {
 		$(".infinity-scroll").removeClass("none");
-		console.log("Infinity scroll...");
+		// TODO: When finish with loading new content loader should be hidden
 	}
 });
 
