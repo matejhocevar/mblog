@@ -14,7 +14,33 @@ $(document).ready(function() {
 		newBlogPost("Surname Lastname", "username", nowDate, content);
 		$("#post-new").val("");
 	});
+
+	initScrollbar();
 });
+
+$(document).resize(function(){
+	adjustHeight();
+});
+
+$(".articles").scroll(function(e) {
+	if ($(".articles").scrollTop() === $(".articles").prop('scrollHeight') - $(".articles").height()) {
+		$(".infinity-scroll").removeClass("none");
+		console.log("Infinity scroll...");
+	}
+});
+
+function initScrollbar() {
+	var $container = $(".articles");
+
+	adjustHeight();
+	$container.perfectScrollbar();
+}
+
+function adjustHeight() {
+	var $container = $(".articles");
+	$container.height(screen.height - $(".header").outerHeight() - $(".post-add").outerHeight() - $("footer").outerHeight() - 100);
+	$container.perfectScrollbar("update");
+}
 
 function updateApp() {
 	updateLinks();
@@ -56,10 +82,7 @@ function urls(str) {
 
 				case 'hashtag' :
 					var hashtag = match.getHashtag();
-					console.log( hashtag );
-
 					return '<a href="/tags/' + hashtag + '">#' + hashtag + '</a>';
-
 			}
 		},
 		truncate: 25,
