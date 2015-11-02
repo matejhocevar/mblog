@@ -1,0 +1,65 @@
+@import "style.less";
+@import "navigation.less";
+
+body { 
+	background: url(/static/img/login.jpg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+
+	.header {
+		background: none !important;
+		box-shadow: none !important;
+
+		.navigation {
+			position: relative;
+			top: -50px;
+		}
+	}
+
+	#login-container {
+		background: rgba(255,255,255, 0.9);
+		width: 350px;
+		height: auto;
+		margin: 0 auto;
+		padding: 30px;
+
+		h2 {
+			margin: 15px 0;
+			text-align: center;
+		}
+
+		label {
+			display: block;
+			width: 100%;
+			margin-top: 20px;
+			color: @base-font-color;
+		}
+
+		input[type="text"], input[type="password"] {
+			display: block;
+			width: 100%;
+			margin-bottom: 15px;
+		}
+
+		#submit {
+			width: 100%;
+			margin: 15px 0;
+			background: @base-link-color;
+			color: @base-background-color;
+		}
+
+		.login-util {
+			display: block;
+
+			a {
+				text-decoration: none;
+
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+}
