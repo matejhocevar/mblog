@@ -4,14 +4,14 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-.gitignore
+#.gitignore
 # Ignore bundler config.
-.bundle
+#.bundle
 
 # Ignore the default SQLite database.
 db
 
 # Ignore all logfiles and tempfiles.
-log
-tmp
-bin
+#log
+#tmp
+#bin
