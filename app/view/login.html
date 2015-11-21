@@ -3,17 +3,17 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>register | mblog</title>
+        <title>login | mblog</title>
 
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="shortcut icon" href="/static/img/favicon.png">
-        <link rel="apple-touch-icon" sizes="57x57" href="/static/img/apple-touch-icon.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="/static/img/apple-touch-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="/static/img/apple-touch-icon-114x114.png">
+        <link rel="shortcut icon" href="../assets/images/favicon.png">
+        <link rel="apple-touch-icon" sizes="57x57" href="../assets/images/apple-touch-icon.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="../assets/images/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="../assets/images/apple-touch-icon-114x114.png">
 
-        <link rel="stylesheet" href="/static/css/login.css">
+        <link rel="stylesheet" href="../assets/css/login.css">
     </head>
     <body>
         <header class="header">
@@ -39,29 +39,21 @@
         <main class="row container clear">
             <section id="login-container">
                 <form action="/login" method="post">
-                    <h2>Register</h2>
+                    <h2>Login</h2>
                     <div>
                         <label for="username">Username</label>
                         <input type="text" placeholder="Username" required="" id="username" />
-                    </div>
-                    <div>
-                        <label for="username">E-mail</label>
-                        <input type="email" placeholder="E-mail" required="" id="email" />
                     </div>
                     <div>
                         <label for="password">Password</label>
                         <input type="password" placeholder="Password" required="" id="password" />
                     </div>
                     <div>
-                        <label for="password">Repeat password</label>
-                        <input type="password" placeholder="Password" required="" id="rePassword" />
-                    </div>
-                    <div>
-                        <input type="submit" id="submit" class="button button-primary" value="Sign in" />
+                        <input type="submit" id="submit" class="button button-primary" value="Log in" />
                     </div>
                     <div class="login-util">
                         <a href="/view/login.html">Lost your password?</a>
-                        <a href="/view/login.html">Login</a>
+                        <a href="/view/register.html">Register</a>
                     </div>
                 </form>
             </section>
