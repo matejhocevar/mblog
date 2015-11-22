@@ -7,14 +7,16 @@ body {
 		display: -moz-box;
 		display: -ms-flexbox;
 		display: -webkit-flex;
-		display: flex;  
+		display: flex;
 
 		-webkit-flex-flow: row wrap;
+		-ms-flex-direction: row;
 		flex-flow: row wrap;
 	}
 
 	.left-content {
 		-webkit-flex: 1 0 0;
+		-ms-flex: 1;
    		flex: 1 0 0;
 
 		order: 1;
@@ -22,6 +24,7 @@ body {
 
 	.right-content {
 		-webkit-flex: 1 0 0;
+		-ms-flex: 1;
    		flex: 1 0 0;
 
 		order: 3;
@@ -43,13 +46,15 @@ body {
 		.profile-summery {
 			.user-info {
 				display: -webkit-flex;
+				display: -ms-flexbox;
 				display: flex;
 				-webkit-flex-direction: row;
+				-ms-flex-direction: row;
 				flex-direction: row;
 
 				.user-img {
 					width: 50px;
-    				margin-right: 10px;
+					margin-right: 10px;
 
 					img {
 						width: 50px;
@@ -59,7 +64,8 @@ body {
 
 
 				a {
-					-webkit-flex: 2 0 0; 
+					-webkit-flex: 2 0 0;
+					-ms-flex: 2;
 					flex: 2 0 0;
 
 					text-align: left;
@@ -85,7 +91,8 @@ body {
 
 				.stat-box {
 					display: inline-block;
-					-webkit-flex: 1 0 0; 
+					-webkit-flex: 1 0 0;
+					-ms-flex: 1;
 					flex: 1 0 0;
 
 					text-align: center;
@@ -156,9 +163,9 @@ body {
 							line-height: 20px;
 
 							position: relative;
-    						top: -5px;
+							top: -5px;
 
-    						margin: 0;
+							margin: 0;
 						}
 					}
 				}
@@ -168,6 +175,7 @@ body {
 
 	.main-content {
 		-webkit-flex: 2 0 0;
+		-ms-flex: 2;
    		flex: 2 0 0;
 
    		margin-left: 10px;
@@ -463,8 +471,9 @@ body {
 
 @media all and (min-width: @breakpoint-mobile) {
 	body {
-		.main-content {	
+		.main-content {
 			-webkit-flex: 1 100%;
+			-ms-flex: 1 100%;
 			flex: 1 100%;
 			order: 3;
 
@@ -478,11 +487,13 @@ body {
 		.left-content { 
 			order: 1;
 			-webkit-flex: 1 100%;
+			-ms-flex: 1 100%;
 			flex: 1 100%;
 		}
 		.right-content { 
 			order: 2;
 			-webkit-flex: 1 100%;
+			-ms-flex: 1 100%;
 			flex: 1 100%;
 		}
 	}
@@ -493,6 +504,7 @@ body {
 		.main-content {
 			-webkit-flex: 1 100%;
 			flex: 1 100%;
+			-ms-flex: 1 100%;
 			order: 3;
 
 			#submitPost { 
@@ -505,11 +517,13 @@ body {
 		.left-content { 
 			order: 1;
 			-webkit-flex: 1 0 0;
+			-ms-flex: 1;
 			flex: 1 0 0;
 		}
 		.right-content { 
 			order: 2;
 			-webkit-flex: 1 0 0;
+			-ms-flex: 1;
 			flex: 1 0 0;
 		}
 	}
@@ -520,10 +534,12 @@ body {
 		.left-content { 
 			order: 1;
 			-webkit-flex: 1 0 0;
+		   	-ms-flex: 1;
 			flex: 1 0 0;
 		}
 		.main-content {
 			-webkit-flex: 2 0 0;
+			-ms-flex: 2;
 			flex: 2 0 0;
 			order: 2;
 
@@ -537,6 +553,7 @@ body {
 		.right-content { 
 			order: 3;
 			-webkit-flex: 1 0 0;
+			-ms-flex: 1;
 			flex: 1 0 0;
 		}
 	}
