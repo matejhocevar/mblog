@@ -195,7 +195,6 @@
     border: 1px dashed;
     text-align: center;
     margin: 0;
-    float: left;
     background: #ffffff;
   }
   .dropzone .dz-preview {

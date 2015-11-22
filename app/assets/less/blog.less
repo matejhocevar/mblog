@@ -193,17 +193,23 @@ body {
 					}
 				}
 
-				#submitPost {
+				#submitPost, #submitPostResponsive {
 					float: right;
 					margin: 10px 0;
 					background: @base-link-color;
 					color: @base-background-color;
 					border: 0;
 				}
+
+				#submitPostResponsive {
+					font-family: '77-Essential-Icons';
+					font-size: 18px;
+				}
 			}
 		}
 
 		.articles {
+			float: left;
 			overflow-x: auto;
 			position: relative;
 
@@ -460,15 +466,22 @@ body {
 		.main-content {	
 			-webkit-flex: 1 100%;
 			flex: 1 100%;
-			order: 1;
+			order: 3;
+
+			#submitPost { 
+				display: none;
+			}
+			#submitPostResponsive {
+				display: block;
+			}
 		}
 		.left-content { 
-			order: 2;
+			order: 1;
 			-webkit-flex: 1 100%;
 			flex: 1 100%;
 		}
 		.right-content { 
-			order: 3;
+			order: 2;
 			-webkit-flex: 1 100%;
 			flex: 1 100%;
 		}
@@ -480,15 +493,22 @@ body {
 		.main-content {
 			-webkit-flex: 1 100%;
 			flex: 1 100%;
-			order: 1;
+			order: 3;
+
+			#submitPost { 
+				display: none;
+			}
+			#submitPostResponsive {
+				display: block;
+			}
 		}
 		.left-content { 
-			order: 2;
+			order: 1;
 			-webkit-flex: 1 0 0;
 			flex: 1 0 0;
 		}
 		.right-content { 
-			order: 3;
+			order: 2;
 			-webkit-flex: 1 0 0;
 			flex: 1 0 0;
 		}
@@ -506,6 +526,13 @@ body {
 			-webkit-flex: 2 0 0;
 			flex: 2 0 0;
 			order: 2;
+
+			#submitPost { 
+				display: block;
+			}
+			#submitPostResponsive {
+				display: none;
+			}
 		}
 		.right-content { 
 			order: 3;
