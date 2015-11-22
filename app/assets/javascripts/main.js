@@ -11,15 +11,79 @@ $(document).ready(function() {
 		e.preventDefault();
 		var nowDate = moment().format("YYYY-MM-DD HH:mm:ss");
 		var content = $("#post-new").val();
-		newBlogPost("Surname Lastname", "username", nowDate, content);
+		var locationHtml = parseLocation(getLocation());
+		newBlogPost("Matej Hočevar", "matox", nowDate, locationHtml, content);
 		$("#post-new").val("");
 		// TODO: when post you need to scroll to top, so user can see their post being published
 	});
 });
 
+
 $(document).resize(function(){
 
 });
+
+function parseLocation(location) {
+	if(location.country !== null) {
+		var town = '';
+		if(location.town !== null) {
+			town = location.town + ', ';
+		}
+		
+		return '<span class="location-icon icon-LocationMarker"></span>' + town + location.country;
+	}
+	else return '';
+}
+
+function savePosition(position) {
+	console.log(position);
+    localStorage.setItem("location_latitude", position.coords.latitude);
+    localStorage.setItem("location_longitude", position.coords.longitude);
+}
+
+function getLocation() {
+	// localStorage.removeItem("location_town");
+	// localStorage.removeItem("location_country");
+	// localStorage.removeItem("location_latitude");
+	// localStorage.removeItem("location_longitude");
+
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(savePosition);
+	}
+	else {
+		console.log("Geolocation is not supported by this browser.");
+	}
+
+	reverseLocation();
+
+	var town = localStorage.getItem("location_town") !== "undefined"?localStorage.getItem("location_town"):null;
+	var country = localStorage.getItem("location_country") !== "undefined"?localStorage.getItem("location_country"):null;
+	
+	return {"town":town, "country":country};
+}
+
+function reverseLocation() {
+	var latitude = localStorage.getItem("location_latitude");
+	var longitude = localStorage.getItem("location_longitude");
+
+	$.get("http://nominatim.openstreetmap.org/reverse", {format:"json", lat:latitude, lon:longitude},
+		function (response) {
+			var town = '';
+			if(response.address) {
+				town = response.address.town;
+			}
+
+			var country = '';
+			if(response.address) {
+				country = response.address.country;
+			}
+
+			localStorage.setItem("location_town", town?town:"undefined");
+			localStorage.setItem("location_country", country?country:"undefined");
+		},
+		"json"
+	);
+}
 
 function initInfinityScroll() {
 
@@ -30,9 +94,9 @@ function updateApp() {
 	updateDates();
 }
 
-function newBlogPost(displayName, username, time, content) {
+function newBlogPost(displayName, username, time, location, content) {
 	var r = parseInt(Math.random() * 1000000, 10);
-	var newPost = '<article post-id="' + r + '" class="blog-post"><header><img class="profile-img" src="http://www.nicenicejpg.com/50"><a href="/profile/' + username + '" class="post-author" rel="author"><h5><b>' + displayName + '</b> @' + username + '</h5></a><time class="post-date" data-post-date="' + time + '"></time></header><p class="post-content">' + urls(content) + '</p></article>';
+	var newPost = '<article post-id="' + r + '" class="blog-post"><header><img class="profile-img" src="/assets/images/sample/mtx_50x50.jpg"><a href="/profile/' + username + '" class="post-author" rel="author"><h5><b>' + displayName + '</b> @' + username + '</h5></a><div class="post-date" data-post-date="' + time + '"></div><div class="post-location">' + location + '</div></header><p class="post-content">' + urls(content) + '</p></article>';
 	$(".articles").prepend(newPost).slideDown('slow');
 	dateMe($("[post-id='" + r + "'] .post-date"));
 }

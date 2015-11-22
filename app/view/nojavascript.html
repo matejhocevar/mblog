@@ -15,7 +15,6 @@
 
         <link rel="stylesheet" href="/assets/css/style.css">
     	<link rel="stylesheet" href="/assets/css/perfect-scrollbar.min.css">
-        <noscript><meta http-equiv="refresh" content="0; url=/view/nojavascript.html" /></noscript>
     </head>
     <body>
         <header class="header">
@@ -95,8 +94,9 @@
                 <div class="post-add">
                     <form method="post" action="/blog/add" id="post-form" class="row">
                         <textarea id="post-new" class="col-9"></textarea>
-                        <input id="submit" class="button button-primary col-2" type="submit" value="Post" />
+                        <input id="submit" class="button button-primary col-2" type="submit" value="Post" disabled="disabled" />
                     </form>
+                    <p>Oops, you need javascript enabled for posting to blog.</p>
                 </div>
 
                 <div class="articles">
@@ -150,11 +150,6 @@
                 <p>&copy; Copyright 2015 &mdash; Matej Hočevar</p>
             </div>
         </footer>
-
-        <script src="/assets/javascripts/vendor/jquery-1.11.3.min.js"></script>
-        <script src="/assets/javascripts/vendor/moment.min.js"></script>
-        <script src="/assets/javascripts/vendor/autolinker.min.js"></script>
-        <script src="/assets/javascripts/main.js"></script>
 
     </body>
 </html>
