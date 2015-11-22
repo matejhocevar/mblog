@@ -14,7 +14,7 @@
     	<link rel="apple-touch-icon" sizes="114x114" href="/assets/images/apple-touch-icon-114x114.png">
 
         <link rel="stylesheet" href="/assets/css/style.css">
-    	<link rel="stylesheet" href="/assets/css/perfect-scrollbar.min.css">
+        <link rel="stylesheet" href="/assets/css/dropzone.css">
         <noscript><meta http-equiv="refresh" content="0; url=/view/nojavascript.html" /></noscript>
     </head>
     <body>
@@ -93,9 +93,11 @@
             <section class="main-content">
                 <h4 class="none">Posts</h4>
                 <div class="post-add">
-                    <form method="post" action="/blog/add" id="post-form" class="row">
-                        <textarea id="post-new" class="col-9"></textarea>
-                        <input id="submit" class="button button-primary col-2" type="submit" value="Post" />
+                    <form method="post" action="/blog/add" id="post-form" class="dropzone" enctype="multipart/form-data">
+                        <textarea id="post-new" class=""></textarea>
+                        <input id="submitPost" class="button button-primary col-2" type="submit" value="Post" />
+                        <div class="dropzone-previews"></div>
+                        <div class="dz-message" data-dz-message><span>Drop image here to upload </span></div>
                     </form>
                 </div>
 
@@ -108,6 +110,9 @@
                             <div class="post-location"><span class="location-icon icon-LocationMarker"></span>Ljubljana, Slovenia</div>
                         </header>
                         <p class="post-content">Golden State Warriorsi (@warriors) so po fantastičnem preobratu nadoknadili kar 23 točk zaostanka, na gostovanju premagali LA Clipperse (@LAClippers) (124:117), dosegli že svojo 13. zaporedno zmago v sezoni in ostajajo še naprej neporaženi. Stephen Curry (@StephenCurry30) (40 točk, trojke 6/14, 11 skokov in 4 podaje) in Chris Paul (@CP3) (35 točk, trojke 5/9, 8 podaj in 4 skoki) pa sta uprizorila pravi epski dvoboj, ki ga je na koncu ponovno dobil aktualni #MVP #nba #warriorsvslaclippers.</p>
+                        <div class="post-image">
+                            <img src="/assets/images/sample/warriors.jpg" alt="Golden State Warriors win" />
+                        </div>
                     </article>
                     <article class="blog-post">
                         <header>
@@ -139,8 +144,11 @@
             </section>
             
             <aside class="right-content sidebar">
-                <section class="trending-posts">
-                    <h4>Trending posts</h4>
+                <section class="suggestions">
+                    <h4>Suggestions</h4>
+                    <ul class="suggestions-list">
+                        <li class="suggestion-item">No suggestions available.</li>
+                    </ul>
                 </section>
             </aside>
         </main>
@@ -154,6 +162,7 @@
         <script src="/assets/javascripts/vendor/jquery-1.11.3.min.js"></script>
         <script src="/assets/javascripts/vendor/moment.min.js"></script>
         <script src="/assets/javascripts/vendor/autolinker.min.js"></script>
+        <script src="/assets/javascripts/vendor/dropzone.min.js"></script>
         <script src="/assets/javascripts/main.js"></script>
 
     </body>

@@ -16,11 +16,14 @@ $(document).ready(function() {
 		$("#post-new").val("");
 		// TODO: when post you need to scroll to top, so user can see their post being published
 	});
+
+	initDropzone();
+	initInfinityScroll();
 });
 
 
-$(document).resize(function(){
-
+$(window).resize(function(){
+	$(".navigation").appendTo(".header-inner");
 });
 
 function parseLocation(location) {
@@ -36,17 +39,11 @@ function parseLocation(location) {
 }
 
 function savePosition(position) {
-	console.log(position);
     localStorage.setItem("location_latitude", position.coords.latitude);
     localStorage.setItem("location_longitude", position.coords.longitude);
 }
 
 function getLocation() {
-	// localStorage.removeItem("location_town");
-	// localStorage.removeItem("location_country");
-	// localStorage.removeItem("location_latitude");
-	// localStorage.removeItem("location_longitude");
-
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(savePosition);
 	}
@@ -83,6 +80,24 @@ function reverseLocation() {
 		},
 		"json"
 	);
+}
+
+function initDropzone() {
+	Dropzone.options.postForm = {
+		autoProcessQueue: false,
+		uploadMultiple: false,
+
+		init: function() {
+			var myDropzone = this;
+
+			this.element.querySelector("#submitPost").addEventListener("click", function(e) {
+				// e.preventDefault();
+				// e.stopPropagation();
+				// myDropzone.processQueue();
+				myDropzone.removeAllFiles();
+			});
+		}
+	};
 }
 
 function initInfinityScroll() {
