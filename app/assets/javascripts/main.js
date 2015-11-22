@@ -16,19 +16,19 @@ $(document).ready(function() {
 		// TODO: when post you need to scroll to top, so user can see their post being published
 	});
 
-	initScrollbar();
+	// initScrollbar();
 });
 
 $(document).resize(function(){
-	adjustHeight();
+	// adjustHeight();
 });
 
-$(".articles").scroll(function(e) {
-	if ($(".articles").scrollTop() === $(".articles").prop('scrollHeight') - $(".articles").height()) {
-		$(".infinity-scroll").removeClass("none");
-		// TODO: When finish with loading new content loader should be hidden
-	}
-});
+// $(".articles").scroll(function(e) {
+// 	if ($(".articles").scrollTop() === $(".articles").prop('scrollHeight') - $(".articles").height()) {
+// 		$(".infinity-scroll").removeClass("none");
+// 		// TODO: When finish with loading new content loader should be hidden
+// 	}
+// });
 
 function initScrollbar() {
 	var $container = $(".articles");

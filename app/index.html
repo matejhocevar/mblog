@@ -42,11 +42,53 @@
         </header>
 
         <main class="row container clear">
-            <aside class="left-content sidebar col-3-desktop col-12">
-                <h4>Last Hashtags</h4>
+            <aside class="left-content sidebar">
+                <section class="profile-summery">
+                    <div class="user-info">
+                        <div class="user-img">
+                            <img alt="user profile picture" src="/assets/images/sample/mtx_50x50.jpeg">
+                        </div>
+                        <a href="/profile/nbaslo">
+                            <h5>Matej Hočevar</h5>
+                            <p class="username">@matox</p>
+                        </a>
+                    </div>
+                    <div class="user-stats">
+                        <div class="post-count stat-box">
+                            <p class="stat-value">1566</p>
+                            <p class="stat-description">posts</p>
+                        </div>
+                        <div class="followers-count stat-box">
+                            <p class="stat-value">545</p>
+                            <p class="stat-description">subscribed</p>
+                        </div>
+                        <div class="subscribers-count stat-box">
+                            <p class="stat-value">1024</p>
+                            <p class="stat-description">subscribers</p>
+                        </div>
+                    </div>
+                    <div class="user-location">
+                        <span class="location-icon icon-LocationMarker"></span>
+                        Ljubljana, Slovenia
+                    </div>
+                    <div class="user-description">A young student who is interested in everything that has pixels.</div>
+                    <div class="user-webpage">
+                        <span class="link-icon icon-Link"></span>
+                        <a href="http://matox.si" target="_blank">http://matox.si</a>
+                    </div>
+                    <div class="subscribe-box">
+                        <input type="button" class="button button-primary subscribe-btn" value="Subscribe" />
+                    </div>
+                </section>
+                <section class="subscriptions">
+                    <h4>Subscription list</h4>
+                    <ul class="subscription-list">
+                        <li class="subscription-item"><a href="/profile/nbaslo"><img src="/assets/images/sample/nba_50x50.jpg" width="20" height="20" alt="NBA Slovenija"/><p>NBA Slovenija</p></a></li>
+                    </ul>
+                </section>
             </aside>
             
-            <section class="main-content col-6-desktop col-12">
+            <section class="main-content">
                 <section class="post-add">
                     <form method="post" action="/blog/add" id="post-form" class="row">
                         <textarea id="post-new" class="col-9"></textarea>
@@ -57,11 +99,29 @@
                 <section class="articles">
                     <article class="blog-post">
                         <header>
-                            <img class="profile-img" src="http://www.nicenicejpg.com/50">
-                            <a href="/profile/qwertzr" class="post-author" rel="author"><b>John Doe</b> @johndoe</a>
-                            <time class="post-date" post-date="2009-10-09 23:57:58"></time>
+                            <img alt="NBA Slovenija" class="profile-img" src="/assets/images/sample/nba_50x50.jpg">
+                            <a href="/profile/nbaslo" class="post-author" rel="author"><b>NBA Slovenija</b> @nbaslo</a>
+                            <div class="post-date" post-date="2015-11-21 22:57:58"></div>
                         </header>
-                        <p class="post-content">@anzet hiša kvalitetnega snemanja :) #headquarters @lavkeri @Cmdr_Hadfield @Apparatus_si</p>
+                        <p class="post-content">Golden State Warriorsi (@warriors) so po fantastičnem preobratu nadoknadili kar 23 točk zaostanka, na gostovanju premagali LA Clipperse (@LAClippers) (124:117), dosegli že svojo 13. zaporedno zmago v sezoni in ostajajo še naprej neporaženi. Stephen Curry (@StephenCurry30) (40 točk, trojke 6/14, 11 skokov in 4 podaje) in Chris Paul (@CP3) (35 točk, trojke 5/9, 8 podaj in 4 skoki) pa sta uprizorila pravi epski dvoboj, ki ga je na koncu ponovno dobil aktualni #MVP #nba #warriorsvslaclippers.</p>
+                    </article>
+                    <article class="blog-post">
+                        <header>
+                            <img class="profile-img" alt="MMC RTV Slovenija" src="/assets/images/sample/rtv_50x50.jpg">
+                            <a href="/profile/rtvslo" class="post-author" rel="author"><b>MMC RTV Slovenija</b> @rtvslo</a>
+                            <div class="post-date" post-date="2015-11-21 22:53:14"></div>
+                        </header>
+                        <p class="post-content">Potem ko je policija v Bruslju v sumljivem vozilu aretirala štiri osebe, je na lovu za še dvema moškima - eden naj bi bil oborožen z razstrelivom, kot so ga uporabili v napadu na Pariz.
+
+                        Podzemna železnica v mestu bo zaprta do nedelje. Ljudi so pozvali, naj se izogibajo javnih krajev in ostanejo doma. Največja trgovska središča so sredi dneva zaprli, odpovedanih je nekaj koncertov, pa tudi prvenstvena nogometna tekma med Lokerenom in Anderlechtom. Odpovedali so tudi bruseljski glasbeni festival Sound/Check v središču mesta. Belgijski nacionalni krizni center je za bruseljsko letališče, ki je zunaj mesta, in za predmestje Vilvoorde prav tako izdal najvišjo stopnjo ogroženosti pred terorističnimi napadi. Za druge dele države še vedno velja nevarnost tretje stopnje, ki so jo razglasili pred tednom dni, po terorističnih napadih v Parizu. #paris #PrayForParis</p>
+                    </article>
+                    <article class="blog-post">
+                        <header>
+                            <img class="profile-img" alt="Today I Learned" src="/assets/images/sample/til_50x50.jpg">
+                            <a href="/profile/til" class="post-author" rel="author"><b>Today I Learned</b> @til</a>
+                            <div class="post-date" post-date="2015-11-21 22:50:44"></div>
+                        </header>
+                        <p class="post-content">@TIL Thomas Baker was wounded and didn't want to get help. Instead, he was given a pistol with 8 bullets. Later, around his dead body were 8 dead enemies and an empty pistol. He received a Medal of Honor posthumously.</p>
                     </article>
                     <div class="infinity-scroll none">
                         <div class="loader1">
@@ -72,8 +132,8 @@
                 </section>
             </section>
             
-            <aside class="right-content sidebar col-3-desktop col-12">
-                <h4>Search</h4>
+            <aside class="right-content sidebar">
+                <h4>Trending posts</h4>
             </aside>
         </main>
 
