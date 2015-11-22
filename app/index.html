@@ -17,7 +17,6 @@
     	<link rel="stylesheet" href="assets/css/perfect-scrollbar.min.css">
     </head>
     <body>
-
         <header class="header">
             <div class="header-inner container clear">
                 <a class="logo-container" href="/">
@@ -44,6 +43,7 @@
         <main class="row container clear">
             <aside class="left-content sidebar">
                 <section class="profile-summery">
+                    <h4 class="none">Profile info</h4>
                     <div class="user-info">
                         <div class="user-img">
                             <img alt="user profile picture" src="/assets/images/sample/mtx_50x50.jpeg">
@@ -89,14 +89,15 @@
             </aside>
             
             <section class="main-content">
-                <section class="post-add">
+                <h4 class="none">Posts</h4>
+                <div class="post-add">
                     <form method="post" action="/blog/add" id="post-form" class="row">
                         <textarea id="post-new" class="col-9"></textarea>
                         <input id="submit" class="button button-primary col-2" type="submit" />
                     </form>
-                </section>
+                </div>
 
-                <section class="articles">
+                <div class="articles">
                     <article class="blog-post">
                         <header>
                             <img alt="NBA Slovenija" class="profile-img" src="/assets/images/sample/nba_50x50.jpg">
@@ -129,11 +130,13 @@
                         </div>
                         Loading more...
                     </div>
-                </section>
+                </div>
             </section>
             
             <aside class="right-content sidebar">
-                <h4>Trending posts</h4>
+                <section class="trending-posts">
+                    <h4>Trending posts</h4>
+                </section>
             </aside>
         </main>
 
@@ -146,7 +149,6 @@
         <script src="assets/javascripts/vendor/jquery-1.11.3.min.js"></script>
         <script src="assets/javascripts/vendor/moment.min.js"></script>
         <script src="assets/javascripts/vendor/autolinker.min.js"></script>
-        <script src="assets/javascripts/vendor/perfect-scrollbar.jquery.min.js"></script>
         <script src="assets/javascripts/main.js"></script>
 
     </body>

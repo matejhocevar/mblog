@@ -15,33 +15,12 @@ $(document).ready(function() {
 		$("#post-new").val("");
 		// TODO: when post you need to scroll to top, so user can see their post being published
 	});
-
-	// initScrollbar();
 });
 
 $(document).resize(function(){
-	// adjustHeight();
+
 });
 
-// $(".articles").scroll(function(e) {
-// 	if ($(".articles").scrollTop() === $(".articles").prop('scrollHeight') - $(".articles").height()) {
-// 		$(".infinity-scroll").removeClass("none");
-// 		// TODO: When finish with loading new content loader should be hidden
-// 	}
-// });
-
-function initScrollbar() {
-	var $container = $(".articles");
-
-	adjustHeight();
-	$container.perfectScrollbar();
-}
-
-function adjustHeight() {
-	var $container = $(".articles");
-	$container.height(screen.height - $(".header").outerHeight() - $(".post-add").outerHeight() - $("footer").outerHeight() - 100);
-	$container.perfectScrollbar("update");
-}
 
 function updateApp() {
 	updateLinks();
