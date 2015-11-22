@@ -8,13 +8,13 @@
     	<meta name="description" content="">
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    	<link rel="shortcut icon" href="assets/images/favicon.png">
-    	<link rel="apple-touch-icon" sizes="57x57" href="assets/images/apple-touch-icon.png">
-    	<link rel="apple-touch-icon" sizes="72x72" href="assets/images/apple-touch-icon-72x72.png">
-    	<link rel="apple-touch-icon" sizes="114x114" href="assets/images/apple-touch-icon-114x114.png">
+    	<link rel="shortcut icon" href="/assets/images/favicon.png">
+    	<link rel="apple-touch-icon" sizes="57x57" href="/assets/images/apple-touch-icon.png">
+    	<link rel="apple-touch-icon" sizes="72x72" href="/assets/images/apple-touch-icon-72x72.png">
+    	<link rel="apple-touch-icon" sizes="114x114" href="/assets/images/apple-touch-icon-114x114.png">
 
-        <link rel="stylesheet" href="assets/css/style.css">
-    	<link rel="stylesheet" href="assets/css/perfect-scrollbar.min.css">
+        <link rel="stylesheet" href="/assets/css/style.css">
+    	<link rel="stylesheet" href="/assets/css/perfect-scrollbar.min.css">
     </head>
     <body>
         <header class="header">
@@ -32,8 +32,7 @@
                 <nav class="navigation">
                     <ul class="navigation-menu">
                         <li class="navigation-item"><a href="/">Home</a></li>
-                        <li class="navigation-item"><a href="/blog">My Blog</a></li>
-                        <li class="navigation-item"><a href="/view/profile">Profile</a></li>
+                        <li class="navigation-item"><a href="/view/profile/index.html">My Blog</a></li>
                         <li class="navigation-item"><a href="/view/login.html">Logout</a></li>
                     </ul>
                 </nav>
@@ -46,9 +45,9 @@
                     <h4 class="none">Profile info</h4>
                     <div class="user-info">
                         <div class="user-img">
-                            <img alt="user profile picture" src="/assets/images/sample/mtx_50x50.jpeg">
+                            <img alt="user profile picture" src="/assets/images/sample/mtx_50x50.jpg">
                         </div>
-                        <a href="/profile/nbaslo">
+                        <a href="/view/profile/index.html">
                             <h5>Matej Hočevar</h5>
                             <p class="username">@matox</p>
                         </a>
@@ -60,11 +59,11 @@
                         </div>
                         <div class="followers-count stat-box">
                             <p class="stat-value">545</p>
-                            <p class="stat-description">subscribed</p>
+                            <p class="stat-description">following</p>
                         </div>
                         <div class="subscribers-count stat-box">
                             <p class="stat-value">1024</p>
-                            <p class="stat-description">subscribers</p>
+                            <p class="stat-description">followers</p>
                         </div>
                     </div>
                     <div class="user-location">
@@ -76,7 +75,7 @@
                         <span class="link-icon icon-Link"></span>
                         <a href="http://matox.si" target="_blank">http://matox.si</a>
                     </div>
-                    <div class="subscribe-box">
+                    <div class="subscribe-box none">
                         <input type="button" class="button button-primary subscribe-btn" value="Subscribe" />
                     </div>
                 </section>
@@ -84,6 +83,8 @@
                     <h4>Subscription list</h4>
                     <ul class="subscription-list">
                         <li class="subscription-item"><a href="/profile/nbaslo"><img src="/assets/images/sample/nba_50x50.jpg" width="20" height="20" alt="NBA Slovenija"/><p>NBA Slovenija</p></a></li>
+                        <li class="subscription-item"><a href="/profile/nbaslo"><img src="/assets/images/sample/rtv_50x50.jpg" width="20" height="20" alt="MMC RTV Slovenija"/><p>MMC RTV Slovenija</p></a></li>
+                        <li class="subscription-item"><a href="/profile/nbaslo"><img src="/assets/images/sample/til_50x50.jpg" width="20" height="20" alt="Today I Learned"/><p>Today I Learned</p></a></li>
                     </ul>
                 </section>
             </aside>
@@ -101,16 +102,16 @@
                     <article class="blog-post">
                         <header>
                             <img alt="NBA Slovenija" class="profile-img" src="/assets/images/sample/nba_50x50.jpg">
-                            <a href="/profile/nbaslo" class="post-author" rel="author"><b>NBA Slovenija</b> @nbaslo</a>
-                            <div class="post-date" post-date="2015-11-21 22:57:58"></div>
+                            <a href="/profile/nbaslo" class="post-author" rel="author"><h5><b>NBA Slovenija</b> @nbaslo</h5></a>
+                            <div class="post-date" data-post-date="2015-11-21 22:57:58"></div>
                         </header>
                         <p class="post-content">Golden State Warriorsi (@warriors) so po fantastičnem preobratu nadoknadili kar 23 točk zaostanka, na gostovanju premagali LA Clipperse (@LAClippers) (124:117), dosegli že svojo 13. zaporedno zmago v sezoni in ostajajo še naprej neporaženi. Stephen Curry (@StephenCurry30) (40 točk, trojke 6/14, 11 skokov in 4 podaje) in Chris Paul (@CP3) (35 točk, trojke 5/9, 8 podaj in 4 skoki) pa sta uprizorila pravi epski dvoboj, ki ga je na koncu ponovno dobil aktualni #MVP #nba #warriorsvslaclippers.</p>
                     </article>
                     <article class="blog-post">
                         <header>
                             <img class="profile-img" alt="MMC RTV Slovenija" src="/assets/images/sample/rtv_50x50.jpg">
-                            <a href="/profile/rtvslo" class="post-author" rel="author"><b>MMC RTV Slovenija</b> @rtvslo</a>
-                            <div class="post-date" post-date="2015-11-21 22:53:14"></div>
+                            <a href="/profile/rtvslo" class="post-author" rel="author"><h5><b>MMC RTV Slovenija</b> @rtvslo</h5></a>
+                            <div class="post-date" data-post-date="2015-11-21 22:53:14"></div>
                         </header>
                         <p class="post-content">Potem ko je policija v Bruslju v sumljivem vozilu aretirala štiri osebe, je na lovu za še dvema moškima - eden naj bi bil oborožen z razstrelivom, kot so ga uporabili v napadu na Pariz.
 
@@ -119,8 +120,8 @@
                     <article class="blog-post">
                         <header>
                             <img class="profile-img" alt="Today I Learned" src="/assets/images/sample/til_50x50.jpg">
-                            <a href="/profile/til" class="post-author" rel="author"><b>Today I Learned</b> @til</a>
-                            <div class="post-date" post-date="2015-11-21 22:50:44"></div>
+                            <a href="/profile/til" class="post-author" rel="author"><h5><b>Today I Learned</b> @til</h5></a>
+                            <div class="post-date" data-post-date="2015-11-21 22:50:44"></div>
                         </header>
                         <p class="post-content">@TIL Thomas Baker was wounded and didn't want to get help. Instead, he was given a pistol with 8 bullets. Later, around his dead body were 8 dead enemies and an empty pistol. He received a Medal of Honor posthumously.</p>
                     </article>
@@ -146,10 +147,10 @@
             </div>
         </footer>
 
-        <script src="assets/javascripts/vendor/jquery-1.11.3.min.js"></script>
-        <script src="assets/javascripts/vendor/moment.min.js"></script>
-        <script src="assets/javascripts/vendor/autolinker.min.js"></script>
-        <script src="assets/javascripts/main.js"></script>
+        <script src="/assets/javascripts/vendor/jquery-1.11.3.min.js"></script>
+        <script src="/assets/javascripts/vendor/moment.min.js"></script>
+        <script src="/assets/javascripts/vendor/autolinker.min.js"></script>
+        <script src="/assets/javascripts/main.js"></script>
 
     </body>
 </html>

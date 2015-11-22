@@ -21,6 +21,9 @@ $(document).resize(function(){
 
 });
 
+function initInfinityScroll() {
+
+}
 
 function updateApp() {
 	updateLinks();
@@ -29,7 +32,7 @@ function updateApp() {
 
 function newBlogPost(displayName, username, time, content) {
 	var r = parseInt(Math.random() * 1000000, 10);
-	var newPost = '<article post-id="' + r + '" class="blog-post"><header><img class="profile-img" src="http://www.nicenicejpg.com/50"><a href="/profile/' + username + '" class="post-author" rel="author"><b>' + displayName + '</b> @' + username + '</a><time class="post-date" post-date="' + time + '"></time></header><p class="post-content">' + urls(content) + '</p></article>';
+	var newPost = '<article post-id="' + r + '" class="blog-post"><header><img class="profile-img" src="http://www.nicenicejpg.com/50"><a href="/profile/' + username + '" class="post-author" rel="author"><h5><b>' + displayName + '</b> @' + username + '</h5></a><time class="post-date" data-post-date="' + time + '"></time></header><p class="post-content">' + urls(content) + '</p></article>';
 	$(".articles").prepend(newPost).slideDown('slow');
 	dateMe($("[post-id='" + r + "'] .post-date"));
 }
@@ -42,7 +45,7 @@ function updateDates() {
 
 function dateMe(obj) {
 	var dateFormat = "YYYY-MM-DD HH:mm:ss";
-	$(obj).text(moment($(obj).attr("post-date"), dateFormat).fromNow());
+	$(obj).text(moment($(obj).attr("data-post-date"), dateFormat).fromNow());
 }
 
 function updateLinks() {
