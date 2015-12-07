@@ -1,0 +1,15 @@
+{% load staticfiles %}
+
+<h4>Subscription list</h4>
+<ul class="subscription-list">
+	{% for sub in subscriptions %}
+    <li class="subscription-item">
+		<a href="/profile/{{ sub.username }}">
+			<img src="{{ sub.profileImage }}" width="20" height="20" alt="{{ sub.displayName }}" />
+			<p>{{ sub.displayName }}</p>
+		</a>
+	</li>
+	{% empty %}
+		<li class="subscription-item">No subscriptions available.</li>
+	{% endfor %}
+</ul>

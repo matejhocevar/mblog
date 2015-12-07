@@ -1,0 +1,32 @@
+{% extends 'mblogApp/login/base.html' %}
+{% load staticfiles %}
+
+{% block title %}login{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block body %}
+
+			<section id="login-container">
+				<form action="/login" method="post">
+					<h2>Login</h2>
+					<div>
+						<label for="username">Username</label>
+						<input type="text" placeholder="Username" required="" id="username" pattern="[a-zA-Z0-9]+" title="Username with letters and numbers" />
+					</div>
+					<div>
+						<label for="password">Password</label>
+						<input type="password" placeholder="Password" required="" id="password" />
+					</div>
+					<div>
+						<input type="submit" id="submit" class="button button-primary" value="Log in" />
+					</div>
+					<div class="login-util">
+						<a href="/login">Lost your password?</a>
+						<a href="/register">Register</a>
+					</div>
+				</form>
+			</section>
+
+		{% block javascript %}{% endblock %}
+{% endblock %}

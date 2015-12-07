@@ -1,0 +1,47 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>{% block title %}{% endblock %} | mblog</title>
+
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="shortcut icon" href="{% static 'images/favicon.png' %}">
+		<link rel="apple-touch-icon" sizes="57x57" href="{% static 'images/apple-touch-icon.png' %}">
+		<link rel="apple-touch-icon" sizes="72x72" href="{% static 'images/apple-touch-icon-72x72.png' %}">
+		<link rel="apple-touch-icon" sizes="114x114" href="{% static 'images/apple-touch-icon-114x114.png' %}">
+
+		<link rel="stylesheet" href="{% static 'css/login.css' %}">
+		{% block css %}{% endblock %}
+	</head>
+	<body>
+		<header class="header">
+			<div class="header-inner container clear">
+				<a class="logo-container" href="/">
+					<div class="logo"></div>
+					<h1 class="title">mblog</h1>
+				</a>
+				<input type="checkbox" id="navigation-toggle-checkbox" name="navigation-toggle-checkbox" class="navigation-toggle-checkbox none">
+				<label for="navigation-toggle-checkbox" class="navigation-toggle-label" onclick>
+					<span class="navigation-toggle-label-inner">
+						<span class="sr">Navigation</span>
+					</span>
+				</label>
+				<nav class="navigation">
+					<ul class="navigation-menu">
+						<li class="navigation-item"><a href="/login">Login</a></li>
+						<li class="navigation-item"><a href="/register">Register</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<main class="row container clear">
+			{% block body %} {% endblock %}
+		</main>
+
+		{% block javascript %}{% endblock %}
+	</body>
+</html>

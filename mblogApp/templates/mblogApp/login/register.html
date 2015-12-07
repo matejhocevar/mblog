@@ -1,0 +1,25 @@
+{% extends 'mblogApp/login/base.html' %}
+{% load staticfiles %}
+
+{% block title %}register{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block body %}
+
+		<section id="login-container">
+			<h2>Register</h2>
+			<form action="/register" method="post">
+				{% csrf_token %}
+				{{ form }}
+				<input type="submit" id="submit" class="button button-primary" value="Sign in" />
+			</form>
+
+			<div class="login-util">
+				<a href="/login">Lost your password?</a>
+				<a href="/login">Login</a>
+			</div>
+		</section>
+
+		{% block javascript %}{% endblock %}
+{% endblock %}

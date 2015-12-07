@@ -1,0 +1,49 @@
+{% load staticfiles %}
+{% load humanize %}
+
+<h4 class="none">Profile info</h4>
+<div class="user-info">
+	<div class="user-img">
+		<img alt="user profile picture" src="{{ MEDIA_URL }}{{ user.profileImage }}">
+	</div>
+	<a href="/profile/{{ user.username }}">
+		<h5>{{ user.displayName }}</h5>
+		<p class="username">@{{ user.username }}</p>
+	</a>
+</div>
+<div class="user-stats">
+	<div class="post-count stat-box">
+		<p class="stat-value">{{ user.posts.count | intword }}</p>
+		<p class="stat-description">posts</p>
+	</div>
+	<div class="followers-count stat-box">
+		<p class="stat-value">{{ user.following.count | intword }}</p>
+		<p class="stat-description">following</p>
+	</div>
+	<div class="subscribers-count stat-box">
+		<p class="stat-value">{{ user.followers.count | intword }}</p>
+		<p class="stat-description">followers</p>
+	</div>
+</div>
+
+{% if user.location %}
+<div class="user-location">
+	<span class="location-icon icon-LocationMarker"></span>
+	{{ user.location }}
+</div>
+{% endif %}
+
+{% if user.description %}
+<div class="user-description">{{ user.description }}</div>
+{% endif %}
+
+{% if user.webpage %}
+	<div class="user-webpage">
+		<span class="link-icon icon-Link"></span>
+		<a href="{{ user.webpage }}" target="_blank">{{ user.webpage }}</a>
+	</div>
+{% endif %}
+
+<div class="subscribe-box">
+	<input type="button" class="button button-primary {{ subscriptionType|default:'nosubscribe' }}-btn" value="{{ subscriptionType|capfirst }}" />
+</div>

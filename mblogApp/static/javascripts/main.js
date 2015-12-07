@@ -113,7 +113,7 @@ function infinityScroll() {
 
 	setTimeout(function() {
 		$.ajax({
-			url: "/view/post.html",
+			url: "/post/load",
 			method: "GET",
 			dataType: "html",
 			success: function(response){

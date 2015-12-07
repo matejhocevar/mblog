@@ -1,0 +1,32 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>{% block title %}{% endblock %} | mblog</title>
+
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="shortcut icon" href="{% static 'images/favicon.png' %}">
+		<link rel="apple-touch-icon" sizes="57x57" href="{% static 'images/apple-touch-icon.png' %}">
+		<link rel="apple-touch-icon" sizes="72x72" href="{% static 'images/apple-touch-icon-72x72.png' %}">
+		<link rel="apple-touch-icon" sizes="114x114" href="{% static 'images/apple-touch-icon-114x114.png' %}">
+
+		{% block css %}{% endblock %}
+	</head>
+	<body>
+		{% block body %} {% endblock %}
+
+		<footer class="clear">
+			<div class="footer-column col-12">
+				<p>&copy; Copyright 2015 &mdash; Matej Hočevar</p>
+			</div>
+		</footer>
+
+		<script src="{% static 'javascripts/vendor/jquery-1.11.3.min.js' %}"></script>
+		{% block javascript %}{% endblock %}
+	</body>
+</html>

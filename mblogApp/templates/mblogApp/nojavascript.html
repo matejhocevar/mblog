@@ -1,0 +1,15 @@
+{% extends "mblogApp/base.html" %}
+{% load staticfiles %}
+
+{% block title %}home{% endblock %}
+
+{% block css %}
+		<link rel="stylesheet" href="{% static 'css/style.css' %}">
+		<link rel="stylesheet" href="{% static 'css/dropzone.css' %}">
+
+		<noscript><meta http-equiv="refresh" content="0; url=/nojavascript" /></noscript>
+{% endblock %}
+
+{% block body %}
+	<div>No javascript</div>
+{% endblock %}

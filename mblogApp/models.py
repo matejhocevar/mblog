@@ -9,7 +9,7 @@ class User(models.Model):
 	location = models.CharField(max_length=100, blank=True)
 	description = models.TextField(max_length=254, blank=True)
 	webpage = models.URLField(max_length=200, blank=True)
-	#profileImage = models.ImageField()
+	profileImage = models.ImageField(upload_to='mblogApp/static/media/img/profile', blank=True)
 
 	following = models.ManyToManyField("self", related_name='followers', symmetrical=False, null=True)
 
@@ -22,7 +22,7 @@ class Post(models.Model):
 	locationTown = models.CharField(max_length=100, blank=True)
 	locationCountry = models.CharField(max_length=100, blank=True)
 	content = models.TextField(max_length=800)
-	#image = models.ImageField()
+	image = models.ImageField(upload_to='mblogApp/static/media/img/post', blank=True)
 
 	def __unicode__(self):
 		return self.content
