@@ -1,8 +1,10 @@
 {% load staticfiles %}
 
+{{ STATIC_URL }}
+
 <article class="blog-post">
 	<header>
-		<img class="profile-img" alt="Today I Learned" src="{% static 'images/sample/til_50x50.jpg' %}">
+		<img class="profile-img" alt="Today I Learned" src="{% static 'media/profile/til_50x50.jpg' %}">
 		<a href="/profile/til" class="post-author" rel="author"><h5><b>Today I Learned</b> @til</h5></a>
 		<div class="post-date" data-post-date="2015-11-21 22:50:44"></div>
 		<div class="post-location"><span class="location-icon icon-LocationMarker"></span>Los Angeles, USA</div>
