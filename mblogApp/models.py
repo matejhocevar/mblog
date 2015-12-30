@@ -1,8 +1,12 @@
 from django.db import models
-import random
+from django.db.models.aggregates import Count
+from random import randint
 
 def randomDefaultImage():
-		return '/static/media/profile/default_%d.png' % random.randint(0, 12)
+		return '/static/media/profile/default_%d.png' % randint(0, 12)
+
+def randomPostImage():
+		return '/static/media/img/post/default_%d.png' % randint(0, 12)
 
 class User(models.Model):
 	username = models.CharField(max_length=50)
@@ -18,7 +22,10 @@ class User(models.Model):
 	following = models.ManyToManyField("self", related_name='followers', symmetrical=False, null=True)
 
 	def __unicode__(self):
-		return self.displayName
+		return "%50s - %20s %20s %25s %20s %100s %50s" % (self.displayName, self.username, self.password, self.email, self.registerDate, self.location, self.webpage)
+
+	def random(self):
+		return User.objects.all().order_by('?')[:1].get()
 
 class Post(models.Model):
 	author = models.ForeignKey('User', related_name='posts')
@@ -26,6 +33,7 @@ class Post(models.Model):
 	locationTown = models.CharField(max_length=100, blank=True)
 	locationCountry = models.CharField(max_length=100, blank=True)
 	content = models.TextField(max_length=800)
+	# image = models.ImageField(upload_to='mblogApp/static/media/img/post', default=randomPostImage, blank=True)
 	image = models.ImageField(upload_to='mblogApp/static/media/img/post', blank=True)
 
 	def __unicode__(self):

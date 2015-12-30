@@ -1,3 +1,4 @@
 env/
 .idea/
 *.pyc
+mblog/settings.py

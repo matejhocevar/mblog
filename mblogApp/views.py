@@ -3,18 +3,21 @@ from django.template import RequestContext
 from django.core.exceptions import ValidationError
 from mblogApp.userUtils import *
 from mblogApp.forms import *
+from mblogApp.fillDB import *
 
 
 def index(request):
 	user = get_object_or_404(User, username='qwertzr')
-	return render_to_response('mblogApp/index.html', RequestContext(request, {'u': user}))
+	posts = Post.objects.filter(author=user).order_by("postTime").reverse()
+	return render_to_response('mblogApp/index.html', RequestContext(request, {'u': user, 'posts': posts}))
 
 
 def profileController(request, username):
 	loggedUser = get_object_or_404(User, username='qwertzr')
 	user = get_object_or_404(User, username=username)
 	subscriptionType = getSubscribeStatus(loggedUser, user)
-	return render_to_response('mblogApp/profile/index.html', RequestContext(request, {'u': user, 'st': subscriptionType}))
+	posts = Post.objects.filter(author=user).order_by("postTime").reverse()
+	return render_to_response('mblogApp/profile/index.html', RequestContext(request, {'u': user, 'st': subscriptionType, 'posts': posts}))
 
 
 def tagController(request, tagname):
@@ -60,3 +63,28 @@ def noJSController(request):
 
 def infinityPostController(request):
 	return render(request, 'mblogApp/post/post.html')
+
+
+def fillController(request, model=None, number=None):
+	number = int(number)
+
+	if model == 'users':
+		users = fillUsers(number)
+		if users:
+			return render_to_response('mblogApp/fill.html', RequestContext(request, {'model': model, 'number': number, 'list': users}))
+		else:
+			return render_to_response(status=404)
+	elif model == 'subscriptions':
+		subscriptions = fillSubscriptions(number)
+		if subscriptions:
+			return render_to_response('mblogApp/fill.html', RequestContext(request, {'model': model, 'number': number, 'list': subscriptions}))
+		else:
+			return render_to_response(status=404)
+	elif model == 'posts':
+		posts = fillPosts(number)
+		if posts:
+			return render_to_response('mblogApp/fill.html', RequestContext(request, {'model': model, 'number': number, 'list': posts}))
+		else:
+			return render_to_response(status=404)
+	else:
+		return render_to_response(status=404)
