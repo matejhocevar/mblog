@@ -69,10 +69,7 @@
 
 			<aside class="right-content sidebar">
 				<section class="suggestions">
-					<h4>Suggestions</h4>
-					<ul class="suggestions-list">
-						<li class="suggestion-item">No suggestions available.</li>
-					</ul>
+					{% include "mblogApp/subscribers.html" with subscribers=u.followers.all %}
 				</section>
 			</aside>
 		</main>

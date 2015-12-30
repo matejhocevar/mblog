@@ -1,4 +1,8 @@
 from django.db import models
+import random
+
+def randomDefaultImage():
+		return '/static/media/profile/default_%d.png' % random.randint(0, 12)
 
 class User(models.Model):
 	username = models.CharField(max_length=50)
@@ -9,7 +13,7 @@ class User(models.Model):
 	location = models.CharField(max_length=100, blank=True)
 	description = models.TextField(max_length=254, blank=True)
 	webpage = models.URLField(max_length=200, blank=True)
-	profileImage = models.ImageField(upload_to='mblogApp/static/media/img/profile', blank=True)
+	profileImage = models.ImageField(upload_to='mblogApp/static/media/profile', default=randomDefaultImage, blank=True)
 
 	following = models.ManyToManyField("self", related_name='followers', symmetrical=False, null=True)
 
