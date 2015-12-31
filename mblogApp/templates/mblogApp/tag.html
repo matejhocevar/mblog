@@ -1,7 +1,7 @@
 {% extends "mblogApp/base.html" %}
 {% load staticfiles %}
 
-{% block title %}home{% endblock %}
+{% block title %}{{ tag }}{% endblock %}
 
 {% block css %}
 		<link rel="stylesheet" href="{% static 'css/style.min.css' %}">
@@ -47,7 +47,7 @@
 				<h4 class="none">Posts</h4>
 				<div class="post-add">
 					<form method="post" action="/blog/add" id="post-form" class="dropzone" enctype="multipart/form-data">
-						<textarea id="post-new" class=""></textarea>
+						<textarea id="post-new" class="">#{{ tag }}</textarea>
 						<input id="submitPost" class="button button-primary col-2" type="submit" value="Post" />
 						<button id="submitPostResponsive" class="button button-primary col-2 none" type="submit"><span class="icon-CreateNew"></span></button>
 						<div class="dropzone-previews"></div>
@@ -55,8 +55,19 @@
 					</form>
 				</div>
 
+				<div class="tag">
+					<h1>#{{ tag }}</h1>
+				</div>
+
 				<div class="articles">
 					{% include "mblogApp/post/post.html" with posts=posts %}
+
+					<div class="infinity-scroll none">
+						<div class="loader1">
+							<i></i><i></i>
+						</div>
+						Loading more...
+					</div>
 				</div>
 			</section>
 

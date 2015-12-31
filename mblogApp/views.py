@@ -4,24 +4,72 @@ from django.core.exceptions import ValidationError
 from mblogApp.userUtils import *
 from mblogApp.forms import *
 from mblogApp.fillDB import *
+from django.db.models import Q
+from django.core.paginator import *
 
 
 def index(request):
 	user = get_object_or_404(User, username='qwertzr')
-	posts = Post.objects.filter(author=user).order_by("postTime").reverse()
-	return render_to_response('mblogApp/index.html', RequestContext(request, {'u': user, 'posts': posts}))
+	posts_list = Post.objects.filter(Q(author__in=user.following.all()) | Q(author=user)).order_by("postTime").reverse()
+
+	paginator = Paginator(posts_list, 10)
+	page = request.GET.get('page')
+
+	try:
+		posts = paginator.page(page)
+	except PageNotAnInteger:
+		posts = paginator.page(1)
+	except EmptyPage:
+		posts = paginator.page(paginator.num_pages)
+
+	if page:
+		return render_to_response('mblogApp/post/post.html', RequestContext(request, {'posts': posts}))
+	else:
+		return render_to_response('mblogApp/index.html', RequestContext(request, {'u': user, 'posts': posts}))
 
 
 def profileController(request, username):
 	loggedUser = get_object_or_404(User, username='qwertzr')
 	user = get_object_or_404(User, username=username)
 	subscriptionType = getSubscribeStatus(loggedUser, user)
-	posts = Post.objects.filter(author=user).order_by("postTime").reverse()
-	return render_to_response('mblogApp/profile/index.html', RequestContext(request, {'u': user, 'st': subscriptionType, 'posts': posts}))
+	posts_list = Post.objects.filter(author=user).order_by("postTime").reverse()
+
+	paginator = Paginator(posts_list, 10)
+	page = request.GET.get('page')
+
+	try:
+		posts = paginator.page(page)
+	except PageNotAnInteger:
+		posts = paginator.page(1)
+	except EmptyPage:
+		posts = paginator.page(paginator.num_pages)
+
+	if page:
+		return render_to_response('mblogApp/post/post.html', RequestContext(request, {'posts': posts}))
+	else:
+		return render_to_response('mblogApp//index.html', RequestContext(request, {'u': user, 'st': subscriptionType, 'posts': posts}))
 
 
 def tagController(request, tagname):
-	return render(request, 'mblogApp/tag/index.html')
+	tag = "#%s" % tagname
+	user = get_object_or_404(User, username='qwertzr')
+	posts_list = Post.objects.filter(Q(content__contains=tag)).order_by("postTime").reverse()
+
+	paginator = Paginator(posts_list, 10)
+	page = request.GET.get('page')
+
+	try:
+		posts = paginator.page(page)
+	except PageNotAnInteger:
+		posts = paginator.page(1)
+	except EmptyPage:
+		posts = paginator.page(paginator.num_pages)
+
+	if page:
+		return render_to_response('mblogApp/post/post.html', RequestContext(request, {'posts': posts}))
+	else:
+		return render_to_response('mblogApp/tag.html', RequestContext(request, {'u': user, 'tag': tagname, 'posts': posts}))
+
 
 
 def loginController(request):

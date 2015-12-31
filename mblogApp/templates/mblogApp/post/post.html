@@ -10,8 +10,29 @@
 		<div class="post-location"><span class="location-icon icon-LocationMarker"></span>{{ post.locationTown }}, {{ post.locationCountry }}</div>
 	</header>
 	<p class="post-content">{{ post.content }}</p>
-	<a class="infinity-next" href="/view/post.html">next page</a>
 </article>
 {% empty %}
-	<article class="blog-post">No posts available.</article>
+	<article class="blog-post">No more posts available.</article>
 {% endfor %}
+<div class="pagination">
+	<span class="step-links">
+		{% if posts.has_previous %}
+			<a href="?page={{ posts.previous_page_number }}">previous</a>
+		{% endif %}
+
+		<span class="current">
+			Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+		</span>
+
+		{% if posts.has_next %}
+			<a class="infinity-next" href="?page={{ posts.next_page_number }}">next</a>
+		{% endif %}
+	</span>
+</div>
+
+<div class="infinity-scroll none">
+	<div class="loader1">
+		<i></i><i></i>
+	</div>
+	Loading more...
+</div>

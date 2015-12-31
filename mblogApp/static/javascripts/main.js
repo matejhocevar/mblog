@@ -18,7 +18,6 @@ $(document).ready(function() {
 	});
 
 	initDropzone();
-	infinityScroll();
 });
 
 
@@ -29,6 +28,7 @@ $(window).resize(function(){
 $(window).scroll(function () {
 	if ($(window).scrollTop() >= $(document).height() - $(window).height() - 5) {
 		infinityScroll();
+		console.log("scrolled to infinity");
 	}
 });
 
@@ -107,22 +107,25 @@ function initDropzone() {
 }
 
 function infinityScroll() {
-	if($(".infinity-scroll").hasClass("none")) {
-		$(".infinity-scroll").toggleClass("none");
-	}
+	var nextPage = $(".infinity-next").attr("href");
+	if(nextPage != null) {
+		if($(".infinity-scroll").hasClass("none")) {
+			$(".infinity-scroll").toggleClass("none");
+		}
 
-	setTimeout(function() {
+		$(".pagination").remove();
+
 		$.ajax({
-			url: "/post/load",
+			url: nextPage,
 			method: "GET",
 			dataType: "html",
 			success: function(response){
 				$(".infinity-scroll").remove();
 				$(".articles").append(response);
-				$(".infinity-scroll").toggleClass("none");
+				$(".pagination").toggleClass("none");
 			}
 		});
-	}, 3000);
+	}
 }
 
 function updateApp() {
@@ -165,7 +168,7 @@ function urls(str) {
 
 				case 'hashtag' :
 					var hashtag = match.getHashtag();
-					return '<a href="/tags/' + hashtag + '">#' + hashtag + '</a>';
+					return '<a href="/tag/' + hashtag + '">#' + hashtag + '</a>';
 			}
 		},
 		truncate: 25,
