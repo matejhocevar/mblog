@@ -65,23 +65,23 @@ def infinityPostController(request):
 	return render(request, 'mblogApp/post/post.html')
 
 
-def fillController(request, model=None, number=None):
+def fillController(request, model=None, number=None, author=None, time=None):
 	number = int(number)
 
 	if model == 'users':
-		users = fillUsers(number)
+		users = fillUsers(number=number)
 		if users:
 			return render_to_response('mblogApp/fill.html', RequestContext(request, {'model': model, 'number': number, 'list': users}))
 		else:
 			return render_to_response(status=404)
 	elif model == 'subscriptions':
-		subscriptions = fillSubscriptions(number)
+		subscriptions = fillSubscriptions(number=number)
 		if subscriptions:
 			return render_to_response('mblogApp/fill.html', RequestContext(request, {'model': model, 'number': number, 'list': subscriptions}))
 		else:
 			return render_to_response(status=404)
 	elif model == 'posts':
-		posts = fillPosts(number)
+		posts = fillPosts(number=number, authorId=author, time=time)
 		if posts:
 			return render_to_response('mblogApp/fill.html', RequestContext(request, {'model': model, 'number': number, 'list': posts}))
 		else:

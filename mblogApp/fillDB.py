@@ -1,5 +1,9 @@
 from faker import Factory as FakerFactory
 from mblogApp.models import User, Post
+from random import gauss
+from math import fabs, floor
+from django.utils import timezone
+
 
 def fillUsers(number=50):
 	try:
@@ -14,7 +18,7 @@ def fillUsers(number=50):
 			user.username = user.displayName.replace(" ", "").lower()
 			user.password = faker.password(digits=True, upper_case=True, lower_case=True)
 			user.email = "%s@%s" % (user.username, faker.domain_name())
-			user.registerDate = faker.date_time_this_decade(before_now=True, after_now=False)
+			user.registerDate = faker.date_time_this_year(before_now=True, after_now=False)
 			user.location = "%s, %s" % (faker.city(), faker.country())
 			user.description = faker.text(max_nb_chars=200)
 			user.webpage = faker.url()
@@ -47,7 +51,7 @@ def fillSubscriptions(number):
 
 	return subscriptions
 
-def fillPosts(number):
+def fillPosts(number, authorId=None, time=None):
 	posts = []
 	user = User()
 	faker = FakerFactory.create()
@@ -55,12 +59,21 @@ def fillPosts(number):
 	try:
 		for _ in range(0, number):
 			p = Post()
-			p.postTime = faker.date_time_this_decade(before_now=True, after_now=False)
+
+			if time == "now":
+				p.postTime = timezone.now()
+			else:
+				p.postTime = faker.date_time_this_year(before_now=True, after_now=False)
+
 			p.locationTown = faker.city()
 			p.locationCountry = faker.country()
-			p.content = faker.sentence(nb_words=50, variable_nb_words=True)
+			p.content = generatePost(faker, hashtags=True, mentions=True)
 
-			u = user.random()
+			if authorId:
+				u = User.objects.get(id=authorId)
+			else:
+				u = user.random()
+
 			u.posts.add(p)
 
 			posts.append("%s posted at %s in %s, %s" % (u.displayName, p.postTime, p.locationTown, p.locationCountry))
@@ -72,3 +85,20 @@ def fillPosts(number):
 		return None
 
 	return posts
+
+def generatePost(f, hashtags=False, mentions=False):
+	content = f.sentence(nb_words=50, variable_nb_words=True)
+
+	if mentions:
+		n = int(floor(fabs(gauss(1, 1))))
+		for _ in range(0, n):
+			u = User()
+			randomUser = u.random()
+			content = "@%s %s" % (randomUser.username, content)
+
+	if hashtags:
+		n = int(floor(fabs(gauss(1, 1))))
+		if n > 0:
+			content = "%s %s" % (" ".join(content.split()[:-n]), " ".join(map((lambda x: '#' + x), content.split()[-n:])))
+
+	return content

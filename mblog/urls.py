@@ -15,7 +15,10 @@ urlpatterns = patterns('',
 	url(r'^profile/(?P<username>\w{0,50})/$', profileController, name='profileController'),
 	url(r'^tag/(?P<tagname>\w{0,50})/$', tagController, name='tagController'),
 	url(r'^post/load$', infinityPostController, name='infinityPostController'),
+
 	url(r'^fill/(?P<model>\w{0,20})/(?P<number>\d{0,10})/$', fillController, name='fillController'),
+	url(r'^fill/(?P<model>\w{0,20})/(?P<number>\d{0,10})/(?P<author>\d{0,10})/$', fillController, name='fillController'),
+	url(r'^fill/(?P<model>\w{0,20})/(?P<number>\d{0,10})/(?P<author>\d{0,10})/(?P<time>\w{0,20})/$', fillController, name='fillController'),
 )
 
 
