@@ -12,8 +12,11 @@
 	<p class="post-content">{{ post.content }}</p>
 </article>
 {% empty %}
-	<article class="blog-post">No more posts available.</article>
+	<article class="blog-post">No posts available.</article>
 {% endfor %}
+{% if posts and not posts.has_next %}
+	<article class="blog-post">No more posts available.</article>
+{% endif %}
 <div class="pagination">
 	<span class="step-links">
 		{% if posts.has_previous %}
