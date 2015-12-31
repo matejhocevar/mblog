@@ -3,7 +3,7 @@ from django.db.models.aggregates import Count
 from random import randint
 
 def randomDefaultImage():
-		return '/static/media/profile/default_%d.png' % randint(0, 12)
+		return '/static/media/profile/default_%d.png' % randint(0, 21)
 
 def randomPostImage():
 		return '/static/media/img/post/default_%d.png' % randint(0, 12)
