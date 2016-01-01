@@ -5,7 +5,7 @@
 <article class="blog-post">
 	<header>
 		<img class="profile-img" alt="{{ post.author.displayName }}" src="{% static post.author.profileImage %}">
-		<a href="/profile/{{ post.author.username }}" class="post-author" rel="author"><h5><b>{{ post.author.displayName }}</b> @{{ post.author.username }}</h5></a>
+		<a href="/profile/{{ post.author.user.username }}" class="post-author" rel="author"><h5><b>{{ post.author.displayName }}</b> @{{ post.author.user.username }}</h5></a>
 		<div class="post-date" data-post-date="{{ post.postTime|date:"Y-m-d H:i" }}"></div>
 		<div class="post-location"><span class="location-icon icon-LocationMarker"></span>{{ post.locationTown }}, {{ post.locationCountry }}</div>
 	</header>

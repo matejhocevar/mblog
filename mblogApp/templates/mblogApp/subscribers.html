@@ -4,7 +4,7 @@
 <ul class="subscription-list">
 	{% for sub in subscribers %}
     <li class="subscription-item">
-		<a href="/profile/{{ sub.username }}">
+		<a href="/profile/{{ sub.user.username }}">
 			<img src="{{ sub.profileImage }}" width="20" height="20" alt="{{ sub.displayName }}" />
 			<p>{{ sub.displayName }}</p>
 		</a>

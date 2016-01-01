@@ -7,19 +7,38 @@
 
 {% block body %}
 
-		<section id="login-container">
-			<h2>Register</h2>
-			<form action="/register" method="post">
-				{% csrf_token %}
-				{{ form }}
-				<input type="submit" id="submit" class="button button-primary" value="Sign in" />
-			</form>
+	<section id="login-container">
+		<h2>Register</h2>
+		<form action="/register/" method="post">
+			{% csrf_token %}
+			{% if form.errors %}
+				<p>Please correct the following fields:</p>
+			{% endif %}
 
-			<div class="login-util">
-				<a href="/login">Lost your password?</a>
-				<a href="/login">Login</a>
-			</div>
-		</section>
+			<label for="username" {% if form.username.errors %} class="errors"{% endif %}>Username:</label>
+			{{ form.username }}
+			{% if form.username.errors %}{{ form.username.errors }}{% endif %}
 
-		{% block javascript %}{% endblock %}
+			<label for="email" {% if form.email.errors %} class="errors"{% endif %}>Email:</label>
+			{{ form.email }}
+			{% if form.email.errors %}{{ form.email.errors }}{% endif %}
+
+			<label for="password" {% if form.password.errors %} class="errors"{% endif %}>Password:</label>
+			{{ form.password }}
+			{% if form.password.errors %}{{ form.password.errors }}{% endif %}
+
+			<label for="confirmPassword" {% if form.confirmPassword.errors %} class="errors"{% endif %}>Confirm password:</label>
+			{{ form.confirmPassword }}
+			{% if form.confirmPassword.errors %}{{ form.confirmPassword.errors }}{% endif %}
+
+			<input type="submit" id="submit" class="button button-primary" value="Sign in" />
+		</form>
+
+		<div class="login-util">
+			<a href="/login">Lost your password?</a>
+			<a href="/login">Login</a>
+		</div>
+	</section>
+
+	{% block javascript %}{% endblock %}
 {% endblock %}

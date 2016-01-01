@@ -1,5 +1,6 @@
 from faker import Factory as FakerFactory
-from mblogApp.models import User, Post
+from django.contrib.auth.models import User
+from mblogApp.models import UserProfile, Post
 from random import gauss
 from math import fabs, floor
 from django.utils import timezone
@@ -14,17 +15,23 @@ def fillUsers(number=50):
 			user = User()
 			firstName = faker.first_name()
 			lastName = faker.last_name()
-			user.displayName = "%s %s" % (firstName, lastName)
-			user.username = user.displayName.replace(" ", "").lower()
+			name = "%s %s" % (firstName, lastName)
+			user.first_name = firstName
+			user.last_name = lastName
+			user.username = name.replace(" ", "").lower()
 			user.password = faker.password(digits=True, upper_case=True, lower_case=True)
 			user.email = "%s@%s" % (user.username, faker.domain_name())
-			user.registerDate = faker.date_time_this_year(before_now=True, after_now=False)
-			user.location = "%s, %s" % (faker.city(), faker.country())
-			user.description = faker.text(max_nb_chars=200)
-			user.webpage = faker.url()
-
-			users.append(user)
 			user.save()
+
+			profile = UserProfile()
+			profile.user = user
+			profile.displayName = name
+			profile.location = "%s, %s" % (faker.city(), faker.country())
+			profile.description = faker.text(max_nb_chars=200)
+			profile.webpage = faker.url()
+
+			users.append(profile.user)
+			profile.save()
 	except Exception as e:
 		print e.message
 		return None
@@ -34,15 +41,15 @@ def fillUsers(number=50):
 
 def fillSubscriptions(number):
 	subscriptions = []
-	user = User()
+	user = UserProfile()
 
 	try:
 		for _ in range(0, number):
 			u1 = user.random()
 			u2 = user.random()
 
-			subscriptions.append("%s -> %s" % (u1.displayName, u2.displayName))
-			u1.following.add(u2)
+			subscriptions.append("%s -> %s" % (u1.profile.displayName, u2.profile.displayName))
+			u1.profile.following.add(u2.profile)
 			u1.save()
 
 	except Exception as e:
@@ -53,11 +60,14 @@ def fillSubscriptions(number):
 
 def fillPosts(number, authorId=None, time=None):
 	posts = []
-	user = User()
+	user = UserProfile()
 	faker = FakerFactory.create()
 
 	try:
-		for _ in range(0, number):
+		for i in range(0, number):
+			if i % 100 == 0:
+				print "Adding %s. element" % i
+
 			p = Post()
 
 			if time == "now":
@@ -74,9 +84,9 @@ def fillPosts(number, authorId=None, time=None):
 			else:
 				u = user.random()
 
-			u.posts.add(p)
+			u.profile.posts.add(p)
 
-			posts.append("%s posted at %s in %s, %s" % (u.displayName, p.postTime, p.locationTown, p.locationCountry))
+			posts.append("%s posted at %s in %s, %s" % (u.profile.displayName, p.postTime, p.locationTown, p.locationCountry))
 			u.save()
 			p.save()
 
@@ -92,7 +102,7 @@ def generatePost(f, hashtags=False, mentions=False):
 	if mentions:
 		n = int(floor(fabs(gauss(1, 1))))
 		for _ in range(0, n):
-			u = User()
+			u = UserProfile()
 			randomUser = u.random()
 			content = "@%s %s" % (randomUser.username, content)
 

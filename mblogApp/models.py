@@ -1,5 +1,7 @@
 from django.db import models
-from django.db.models.aggregates import Count
+from django.db.models.signals import post_save
+from django.conf import settings
+from django.contrib.auth.models import User
 from random import randint
 
 def randomDefaultImage():
@@ -8,27 +10,28 @@ def randomDefaultImage():
 def randomPostImage():
 		return '/static/media/img/post/default_%d.png' % randint(0, 12)
 
-class User(models.Model):
-	username = models.CharField(max_length=50)
-	displayName = models.CharField(max_length=100)
-	password = models.CharField(max_length=100)
-	email = models.EmailField(max_length=254)
-	registerDate = models.DateTimeField()
+
+class UserProfile(models.Model):
+	user = models.OneToOneField(User, related_name="profile")
+	displayName = models.CharField(max_length=100, blank=True)
 	location = models.CharField(max_length=100, blank=True)
 	description = models.TextField(max_length=254, blank=True)
 	webpage = models.URLField(max_length=200, blank=True)
-	profileImage = models.ImageField(upload_to='mblogApp/static/media/profile', default=randomDefaultImage, blank=True)
+	profileImage = models.ImageField(upload_to='profile', default=randomDefaultImage, blank=True)
 
-	following = models.ManyToManyField("self", related_name='followers', symmetrical=False, null=True)
+	following = models.ManyToManyField("self", related_name='followers', symmetrical=False, null=True, blank=True)
 
 	def __unicode__(self):
-		return "%50s - %20s %20s %25s %20s %100s %50s" % (self.displayName, self.username, self.password, self.email, self.registerDate, self.location, self.webpage)
+		return "%255s" % (self.user.username)
 
 	def random(self):
 		return User.objects.all().order_by('?')[:1].get()
 
+User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
+
+
 class Post(models.Model):
-	author = models.ForeignKey('User', related_name='posts')
+	author = models.ForeignKey('UserProfile', related_name='posts')
 	postTime = models.DateTimeField()
 	locationTown = models.CharField(max_length=100, blank=True)
 	locationCountry = models.CharField(max_length=100, blank=True)

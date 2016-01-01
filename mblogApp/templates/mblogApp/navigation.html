@@ -1,0 +1,26 @@
+	<header class="header">
+		<div class="header-inner container clear">
+			<a class="logo-container" href="/">
+				<div class="logo"></div>
+				<h1 class="title">mblog</h1>
+			</a>
+			<input type="checkbox" id="navigation-toggle-checkbox" name="navigation-toggle-checkbox" class="navigation-toggle-checkbox none">
+			<label for="navigation-toggle-checkbox" class="navigation-toggle-label" onclick>
+				<span class="navigation-toggle-label-inner">
+					<span class="sr">Navigation</span>
+				</span>
+			</label>
+			<nav class="navigation">
+				<ul class="navigation-menu">
+					{% if u.is_authenticated %}
+					<li class="navigation-item"><a href="/">Home</a></li>
+					<li class="navigation-item"><a href="/profile/{{ user.username }}">My Blog</a></li>
+					<li class="navigation-item"><a href="/logout">Logout</a></li>
+					{% else %}
+					<li class="navigation-item"><a href="/login">Login</a></li>
+					<li class="navigation-item"><a href="/register">Register</a></li>
+					{% endif %}
+				</ul>
+			</nav>
+		</div>
+	</header>

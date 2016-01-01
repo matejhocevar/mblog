@@ -11,40 +11,11 @@
 {% endblock %}
 
 {% block body %}
-		<header class="header">
-			<div class="header-inner container clear">
-				<a class="logo-container" href="/">
-					<div class="logo"></div>
-					<h1 class="title">mblog</h1>
-				</a>
-				<input type="checkbox" id="navigation-toggle-checkbox" name="navigation-toggle-checkbox" class="navigation-toggle-checkbox none">
-				<label for="navigation-toggle-checkbox" class="navigation-toggle-label" onclick>
-					<span class="navigation-toggle-label-inner">
-						<span class="sr">Navigation</span>
-					</span>
-				</label>
-				<nav class="navigation">
-					<ul class="navigation-menu">
-						<li class="navigation-item"><a href="/">Home</a></li>
-						<li class="navigation-item"><a href="/profile/{{ u.username }}">My Blog</a></li>
-						<li class="navigation-item"><a href="/login">Logout</a></li>
-					</ul>
-				</nav>
-			</div>
-		</header>
+		{% include "mblogApp/navigation.html" with user=u %}
 
 		<main class="row container clear">
 			<section class="main-content">
-				<h4 class="none">Posts</h4>
-				<div class="post-add">
-					<form method="post" action="/blog/add" id="post-form" class="dropzone" enctype="multipart/form-data">
-						<textarea id="post-new" class=""></textarea>
-						<input id="submitPost" class="button button-primary col-2" type="submit" value="Post" />
-						<button id="submitPostResponsive" class="button button-primary col-2 none" type="submit"><span class="icon-CreateNew"></span></button>
-						<div class="dropzone-previews"></div>
-						<div class="dz-message" data-dz-message><span>Drop image here to upload </span></div>
-					</form>
-				</div>
+				{% include "mblogApp/post/addNew.html" with user=u %}
 
 				<div class="articles">
 					{% include "mblogApp/post/post.html" with posts=posts %}
