@@ -14,7 +14,7 @@
 				<ul class="navigation-menu">
 					{% if u.is_authenticated %}
 					<li class="navigation-item"><a href="/">Home</a></li>
-					<li class="navigation-item"><a href="/profile/{{ user.username }}">My Blog</a></li>
+					<li class="navigation-item"><a href="/profile/{{ u.username }}">My Blog</a></li>
 					<li class="navigation-item"><a href="/logout">Logout</a></li>
 					{% else %}
 					<li class="navigation-item"><a href="/login">Login</a></li>

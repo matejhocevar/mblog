@@ -2,7 +2,7 @@
 {% if u.is_authenticated %}
 <div class="post-add">
 	<form method="post" action="/blog/add" id="post-form" class="dropzone" enctype="multipart/form-data">
-		<textarea id="post-new" class=""></textarea>
+		<textarea id="post-new" class="">{% if tag %}#{{ tag }}{% endif %}{% if mention %}@{{ mention.username }}{% endif %}</textarea>
 		<input id="submitPost" class="button button-primary col-2" type="submit" value="Post" />
 		<button id="submitPostResponsive" class="button button-primary col-2 none" type="submit"><span class="icon-CreateNew"></span></button>
 		<div class="dropzone-previews"></div>

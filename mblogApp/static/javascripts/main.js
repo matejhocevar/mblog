@@ -17,13 +17,17 @@ $(document).ready(function() {
 		// TODO: when post you need to scroll to top, so user can see their post being published
 	});
 
+	$("#subscribe-btn").on("click", function(){
+		subscribe(this);
+	});
+
 	initDropzone();
+
 });
-
-
 $(window).resize(function(){
 	$(".navigation").appendTo(".header-inner");
 });
+
 
 $(window).scroll(function () {
 	if ($(window).scrollTop() >= $(document).height() - $(window).height() - 5) {
@@ -31,6 +35,41 @@ $(window).scroll(function () {
 		console.log("scrolled to infinity");
 	}
 });
+
+function subscribe(obj) {
+	var type = "subscribe";
+	var next = "Unsubscribe";
+
+	if($(obj).val() == "Subscribe") {
+		type = "subscribe";
+		next = "Unsubscribe";
+	}
+	else if($(obj).val() == "Unsubscribe") {
+		type = "unsubscribe";
+		next = "Subscribe";
+	}
+
+	var user = $(".profile-summery .username").text().split("@")[1] || "null";
+
+	$.ajax({
+		url: /profile/ + user + "/" + type,
+		method: "GET",
+		success: function(response){
+			$(".subscribers").html(response).fadeIn();
+
+			$.ajax({
+				url: /profile/ + user + "/info",
+				method: "GET",
+				success: function(response){
+					$(".profile-summery").html(response).fadeIn();
+					$("#subscribe-btn").on("click", function(){
+						subscribe(this);
+					});
+				}
+			});
+		}
+	});
+}
 
 function parseLocation(location) {
 	if(location.country !== null) {

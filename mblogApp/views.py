@@ -33,11 +33,15 @@ def profileController(request, username):
 	loggedUser = None
 	if request.user.is_authenticated():
 		loggedUser = request.user
-	user = get_object_or_404(User, username=username)
 
-	subscriptionType = getSubscribeStatus(loggedUser, user.profile)
+	profileUser = get_object_or_404(User, username=username)
 
-	posts_list = Post.objects.filter(author=user.profile).order_by("postTime").reverse()
+	if loggedUser == profileUser:
+		return HttpResponseRedirect("/")
+
+	subscriptionType = getSubscribeStatus(loggedUser=loggedUser, profileUser=profileUser)
+
+	posts_list = Post.objects.filter(author=profileUser.profile).order_by("postTime").reverse()
 
 	page = request.GET.get('page')
 	posts = paginatePosts(postList=posts_list, numberOfResults=10, page=page)
@@ -45,12 +49,34 @@ def profileController(request, username):
 	if page:
 		return render_to_response('mblogApp/post/post.html', RequestContext(request, {'posts': posts}))
 	else:
-		return render_to_response('mblogApp//index.html', RequestContext(request, {'u': user, 'subscriptionType': subscriptionType, 'posts': posts}))
+		return render_to_response('mblogApp/profile/index.html', RequestContext(request, {'u': profileUser, 'subscriptionType': subscriptionType, 'posts': posts}))
+
+
+def subscribeController(request, username=None, mode=None):
+	if request.user.is_authenticated():
+		me = request.user.profile
+		user = User.objects.get(username=username)
+		userProfile = user.profile
+
+		if mode == "subscribe":
+			list = subscribe(user=userProfile, me=me)
+		elif mode == "unsubscribe":
+			list = unsubscribe(user=userProfile, me=me)
+		elif mode == "info":
+			st = getSubscribeStatus(loggedUser=me.user, profileUser=user)
+			return render_to_response('mblogApp/profile/info.html', RequestContext(request, {'u': user, 'subscriptionType': st}))
+
+		return render_to_response('mblogApp/subscribers.html', RequestContext(request, {'subscribers': list}))
+	else:
+		return render_to_response('mblogApp/login/index.html', RequestContext(request, {}))
 
 
 def tagController(request, tagname):
+	user = None
+	if request.user.is_authenticated():
+		user = request.user
 	tag = "#%s" % tagname
-	user = get_object_or_404(UserProfile, username='matox2')
+
 	posts_list = Post.objects.filter(Q(content__contains=tag)).order_by("postTime").reverse()
 
 	page = request.GET.get('page')
@@ -61,10 +87,9 @@ def tagController(request, tagname):
 	else:
 		return render_to_response('mblogApp/tag.html', RequestContext(request, {'u': user, 'tag': tagname, 'posts': posts}))
 
-
 def loginController(request):
 	if request.user.is_authenticated():
-		return HttpResponseRedirect('/profile')
+		return HttpResponseRedirect('/')
 	if request.method == 'POST':
 		form = LoginForm(request.POST)
 		if form.is_valid():
@@ -85,7 +110,7 @@ def loginController(request):
 
 def registerController(request):
 	if request.user.is_authenticated():
-		return HttpResponseRedirect('/profile')
+		return HttpResponseRedirect('/')
 	if request.method == 'POST':
 		form = RegistrationForm(request.POST)
 		if form.is_valid():

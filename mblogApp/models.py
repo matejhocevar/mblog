@@ -19,7 +19,7 @@ class UserProfile(models.Model):
 	webpage = models.URLField(max_length=200, blank=True)
 	profileImage = models.ImageField(upload_to='profile', default=randomDefaultImage, blank=True)
 
-	following = models.ManyToManyField("self", related_name='followers', symmetrical=False, null=True, blank=True)
+	following = models.ManyToManyField("self", related_name='followers', symmetrical=False, blank=True)
 
 	def __unicode__(self):
 		return "%255s" % (self.user.username)

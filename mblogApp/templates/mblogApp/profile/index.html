@@ -1,7 +1,7 @@
 {% extends "mblogApp/base.html" %}
 {% load staticfiles %}
 
-{% block title %}home{% endblock %}
+{% block title %}{{ u.profile.displayName }}{% endblock %}
 
 {% block css %}
 		<link rel="stylesheet" href="{% static 'css/style.min.css' %}">
@@ -11,11 +11,11 @@
 {% endblock %}
 
 {% block body %}
-		{% include "mblogApp/navigation.html" with user=u %}
+		{% include "mblogApp/navigation.html" with u=u %}
 
 		<main class="row container clear">
 			<section class="main-content">
-				{% include "mblogApp/post/addNew.html" with user=u %}
+				{% include "mblogApp/post/addNew.html" with u=u mention=u %}
 
 				<div class="articles">
 					{% include "mblogApp/post/post.html" with posts=posts %}
@@ -31,17 +31,17 @@
 
 			<aside class="left-content sidebar">
 				<section class="profile-summery">
-					{% include "mblogApp/profile/info.html" with subscriptionType=st user=u %}
+					{% include "mblogApp/profile/info.html" with subscriptionType=subscriptionType u=u %}
 				</section>
 
 				<section class="subscriptions">
-					{% include "mblogApp/subscriptions.html" with subscriptions=u.following.all %}
+					{% include "mblogApp/subscriptions.html" with subscriptions=u.profile.following.all %}
 				</section>
 			</aside>
 
 			<aside class="right-content sidebar">
-				<section class="suggestions">
-					{% include "mblogApp/subscribers.html" with subscribers=u.followers.all %}
+				<section class="subscribers">
+					{% include "mblogApp/subscribers.html" with subscribers=u.profile.followers.all %}
 				</section>
 			</aside>
 		</main>
