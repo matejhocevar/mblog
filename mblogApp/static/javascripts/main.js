@@ -6,23 +6,11 @@ $(document).ready(function() {
 		updateApp();
 	}, updateInterval);
 
-
-	$("#post-form").submit(function(e){
-		e.preventDefault();
-		var nowDate = moment().format("YYYY-MM-DD HH:mm:ss");
-		var content = $("#post-new").val();
-		var locationHtml = parseLocation(getLocation());
-		newBlogPost("Matej Hočevar", "matox", nowDate, locationHtml, content);
-		$("#post-new").val("");
-		// TODO: when post you need to scroll to top, so user can see their post being published
-	});
-
 	$("#subscribe-btn").on("click", function(){
 		subscribe(this);
 	});
 
-	initDropzone();
-
+	initNewPost();
 });
 $(window).resize(function(){
 	$(".navigation").appendTo(".header-inner");
@@ -32,7 +20,6 @@ $(window).resize(function(){
 $(window).scroll(function () {
 	if ($(window).scrollTop() >= $(document).height() - $(window).height() - 5) {
 		infinityScroll();
-		console.log("scrolled to infinity");
 	}
 });
 
@@ -71,16 +58,50 @@ function subscribe(obj) {
 	});
 }
 
+function initNewPost() {
+	initDropzone();
+
+	$("#post-form").submit(function(e){
+		e.preventDefault();
+		parseLocation(getLocation());
+
+		var data = new FormData($('#post-form').get(0));
+
+		$.ajax({
+			type:"POST",
+			url: "/post/add/",
+			data : data,
+			cache: false,
+			contentType: false,
+			processData: false,
+			success: function(response){
+				$(".post-add").html(response);
+				myDropzone.removeAllFiles();
+			},
+			error: function(response){
+				$(".post-add").html(response);
+				myDropzone.removeAllFiles();
+			}
+		});
+
+
+	});
+}
+
 function parseLocation(location) {
+	var town = '';
+	var country = '';
 	if(location.country !== null) {
-		var town = '';
+		country = location.country;
 		if(location.town !== null) {
-			town = location.town + ', ';
+			town = location.town;
 		}
-		
-		return '<span class="location-icon icon-LocationMarker"></span>' + town + location.country;
 	}
-	else return '';
+
+	$("#post-form #id_town").val(town);
+	$("#post-form #id_country").val(country);
+
+	return;
 }
 
 function savePosition(position) {
@@ -136,10 +157,22 @@ function initDropzone() {
 			var myDropzone = this;
 
 			this.element.querySelector("#submitPost").addEventListener("click", function(e) {
-				// e.preventDefault();
-				// e.stopPropagation();
-				// myDropzone.processQueue();
+				e.preventDefault();
+				e.stopPropagation();
+				myDropzone.processQueue();
+				//myDropzone.removeAllFiles();
+			});
+
+			this.on("success", function(files, response){
+				$(".post-add").html(response);
 				myDropzone.removeAllFiles();
+				initNewPost();
+			});
+
+			this.on("error", function(files, response){
+				$(".post-add").html(response);
+				myDropzone.removeAllFiles();
+				initNewPost();
 			});
 		}
 	};

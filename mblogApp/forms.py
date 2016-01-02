@@ -30,6 +30,34 @@ class RegistrationForm(ModelForm):
 		except:
 			raise forms.ValidationError("Password is required.")
 
+
 class LoginForm(forms.Form):
 	username = forms.CharField(label="Username")
 	password = forms.CharField(label="Password", widget=forms.PasswordInput())
+
+
+class PostForm(forms.Form):
+	town = forms.CharField(label="Town", widget=forms.HiddenInput(), required=False)
+	country = forms.CharField(label="Country", widget=forms.HiddenInput(), required=False)
+	image = forms.ImageField(help_text="Upload image: ", widget=forms.HiddenInput(), required=False)
+	content = forms.CharField(widget=forms.widgets.Textarea(attrs={'id': 'post-new'}))
+
+	def clean_town(self):
+		town = self.cleaned_data["town"]
+		try:
+			if town == "''":
+				return None
+			else:
+				return town
+		except:
+			return None
+
+	def clean_country(self):
+		country = self.cleaned_data["country"]
+		try:
+			if country == "''":
+				return None
+			else:
+				return country
+		except:
+			return None

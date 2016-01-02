@@ -8,7 +8,7 @@ def randomDefaultImage():
 		return '/static/media/profile/default_%d.png' % randint(0, 21)
 
 def randomPostImage():
-		return '/static/media/img/post/default_%d.png' % randint(0, 12)
+		return '/static/media/post/default_%d.png' % randint(0, 12)
 
 
 class UserProfile(models.Model):
@@ -17,7 +17,7 @@ class UserProfile(models.Model):
 	location = models.CharField(max_length=100, blank=True)
 	description = models.TextField(max_length=254, blank=True)
 	webpage = models.URLField(max_length=200, blank=True)
-	profileImage = models.ImageField(upload_to='profile', default=randomDefaultImage, blank=True)
+	profileImage = models.ImageField(upload_to='mblogApp/static/media/profile', default=randomDefaultImage, blank=True)
 
 	following = models.ManyToManyField("self", related_name='followers', symmetrical=False, blank=True)
 
@@ -37,7 +37,7 @@ class Post(models.Model):
 	locationCountry = models.CharField(max_length=100, blank=True)
 	content = models.TextField(max_length=800)
 	# image = models.ImageField(upload_to='mblogApp/static/media/img/post', default=randomPostImage, blank=True)
-	image = models.ImageField(upload_to='mblogApp/static/media/img/post', blank=True)
+	image = models.ImageField(upload_to='mblogApp/static/media/post', blank=True)
 
 	def __unicode__(self):
 		return self.content

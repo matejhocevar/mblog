@@ -1,8 +1,19 @@
 <h4 class="none">Posts</h4>
 {% if u.is_authenticated %}
 <div class="post-add">
-	<form method="post" action="/blog/add" id="post-form" class="dropzone" enctype="multipart/form-data">
-		<textarea id="post-new" class="">{% if tag %}#{{ tag }}{% endif %}{% if mention %}@{{ mention.username }}{% endif %}</textarea>
+	<form method="post" action="/post/add/" id="post-form" class="dropzone" enctype="multipart/form-data">
+		{% csrf_token %}
+
+		{% if status == "success" %}
+			<p>Post successfully posted.</p>
+		{% elif status == "error" %}
+			<p>Error while sending post.</p>
+		{% endif %}
+
+		{{ form.content }}
+		{{ form.image }}
+		{{ form.town }}
+		{{ form.country }}
 		<input id="submitPost" class="button button-primary col-2" type="submit" value="Post" />
 		<button id="submitPostResponsive" class="button button-primary col-2 none" type="submit"><span class="icon-CreateNew"></span></button>
 		<div class="dropzone-previews"></div>

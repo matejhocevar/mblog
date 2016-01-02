@@ -1,15 +1,20 @@
 {% load staticfiles %}
+{% load customTags %}
 
-{{ STATIC_URL }}
 {% for post in posts %}
 <article class="blog-post">
 	<header>
 		<img class="profile-img" alt="{{ post.author.displayName }}" src="{% static post.author.profileImage %}">
 		<a href="/profile/{{ post.author.user.username }}" class="post-author" rel="author"><h5><b>{{ post.author.displayName }}</b> @{{ post.author.user.username }}</h5></a>
 		<div class="post-date" data-post-date="{{ post.postTime|date:"Y-m-d H:i" }}"></div>
-		<div class="post-location"><span class="location-icon icon-LocationMarker"></span>{{ post.locationTown }}, {{ post.locationCountry }}</div>
+		<div class="post-location"><span class="location-icon icon-LocationMarker"></span>{% if post.locationTown %}{{ post.locationTown }}, {% endif %}{{ post.locationCountry }}</div>
 	</header>
 	<p class="post-content">{{ post.content }}</p>
+	{% if post.image %}
+	<div class="post-image">
+		<img src="{{ post|getPostImage }}" alt="{{ post.author.displayName }}">
+	</div>
+	{% endif %}
 </article>
 {% empty %}
 	<article class="blog-post">No posts available.</article>

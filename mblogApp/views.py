@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login
 from mblogApp.postServices import *
 from mblogApp.userServices import *
 from mblogApp.databaseServices import *
-from mblogApp.forms import RegistrationForm, LoginForm
+from mblogApp.forms import RegistrationForm, LoginForm, PostForm
 
 from django.db.models import Q
 from mblogApp.models import UserProfile, Post
@@ -26,7 +26,8 @@ def index(request):
 	if page:
 		return render_to_response('mblogApp/post/post.html', RequestContext(request, {'posts': posts}))
 	else:
-		return render_to_response('mblogApp/index.html', RequestContext(request, {'u': user, 'posts': posts}))
+		form = PostForm()
+		return render_to_response('mblogApp/index.html', RequestContext(request, {'u': user, 'posts': posts, 'form': form}))
 
 
 def profileController(request, username):
@@ -49,7 +50,37 @@ def profileController(request, username):
 	if page:
 		return render_to_response('mblogApp/post/post.html', RequestContext(request, {'posts': posts}))
 	else:
-		return render_to_response('mblogApp/profile/index.html', RequestContext(request, {'u': profileUser, 'subscriptionType': subscriptionType, 'posts': posts}))
+		form = PostForm(initial={'content': '@'+profileUser.username})
+		return render_to_response('mblogApp/profile/index.html', RequestContext(request, {'u': profileUser, 'subscriptionType': subscriptionType, 'posts': posts, 'form': form}))
+
+
+def postController(request):
+	if request.user.is_authenticated():
+		user = request.user
+
+		if request.is_ajax():
+			form = PostForm(request.POST)
+			if form.is_valid():
+				post = Post()
+				post.content = form.cleaned_data['content']
+				post.locationTown = form.cleaned_data['town']
+				post.locationCountry = form.cleaned_data['country']
+				post.postTime = timezone.now()
+				post.image = request.FILES.get('file')
+				user.profile.posts.add(post)
+
+				post.save()
+				user.save()
+
+				newForm = PostForm()
+				return render_to_response('mblogApp/post/addNew.html', RequestContext(request, {'u': user, 'form': newForm, 'status': "success"}))
+			else:
+				return render_to_response('mblogApp/post/addNew.html', RequestContext(request, {'u': user, 'form': form, 'status': "error"}))
+		else:
+			return HttpResponseRedirect('/login')
+	else:
+		return HttpResponseRedirect('/login')
+	return None
 
 
 def subscribeController(request, username=None, mode=None):
@@ -85,7 +116,8 @@ def tagController(request, tagname):
 	if page:
 		return render_to_response('mblogApp/post/post.html', RequestContext(request, {'posts': posts}))
 	else:
-		return render_to_response('mblogApp/tag.html', RequestContext(request, {'u': user, 'tag': tagname, 'posts': posts}))
+		form = PostForm(initial={'content': tag})
+		return render_to_response('mblogApp/tag.html', RequestContext(request, {'u': user, 'tag': tagname, 'posts': posts, 'form': form}))
 
 def loginController(request):
 	if request.user.is_authenticated():
