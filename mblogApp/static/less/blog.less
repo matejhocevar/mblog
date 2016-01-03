@@ -17,7 +17,7 @@ body {
 	.left-content {
 		-webkit-flex: 1 0 0;
 		-ms-flex: 1;
-   		flex: 1 0 0;
+	 		flex: 1 0 0;
 
 		order: 1;
 	}
@@ -25,7 +25,7 @@ body {
 	.right-content {
 		-webkit-flex: 1 0 0;
 		-ms-flex: 1;
-   		flex: 1 0 0;
+	 		flex: 1 0 0;
 
 		order: 3;
 	}
@@ -40,6 +40,115 @@ body {
 
 			h4 {
 				margin: 0;
+			}
+
+			.twitter-typeahead {
+				width: 100% ;
+
+				.tt-query, .tt-input {
+					width: 100%;
+					outline: @base-link-color;
+					background: none !important;
+					border: 1px solid rgba(88, 88, 88, 0.4);
+
+					-webkit-box-shadow: none !important;
+					-moz-box-shadow: none !important;
+					box-shadow: none !important;
+
+					&:active, &:focus {
+						border: 1px solid @base-link-color;
+					}
+				}
+
+				.tt-hint {
+					color: #999
+				}
+
+				.tt-menu {
+					width: 100%;;
+					margin-top: 4px;
+					padding: 4px 0;
+					background-color: #fff;
+					border: 1px solid @base-link-color;
+					-webkit-border-radius: 0;
+					-moz-border-radius: 0;
+					border-radius: 0;
+					-webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+					-moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+					box-shadow: 0 5px 10px rgba(0,0,0,.2);
+				}
+
+				.tt-suggestion {
+					padding: 3px 20px;
+					display: block;
+					line-height: 30px;
+					color: @base-font-color;
+
+					&:hover {
+						color: #fff;
+
+						h5 {
+							color: #fff;
+						}
+					}
+
+					.user-thumbnail {
+						position: relative;
+						top: 4px;
+						width: 30px;
+						display: inline-block;
+						line-height: 30px;
+					}
+
+					.user-info {
+						position: relative;
+						top: 3px;
+						display: inline-block;
+						margin-left: 5px;
+
+						span, h5 {			
+							display: block;
+							margin: 0;
+						}
+
+						&.two {
+							line-height: 15px;
+
+							.username {
+								font-size: 0.8em;
+							}
+						}
+
+						&.one {
+							line-height: 30px;
+
+							.username {
+								position: relative;
+    							top: -10px;
+							}
+						}
+					}
+					
+				}
+
+				.tt-suggestion.tt-cursor, .tt-suggestion:hover {
+					color: #fff;
+					background-color: @base-link-color;
+
+				}
+
+				.tt-suggestion p {
+					margin: 0;
+				}
+
+				.tt-dropdown-menu {
+					max-height: 150px;
+					overflow-y: auto;
+				}
+
+				.empty-message {
+					padding: 10px;
+				}
 			}
 		}
 
@@ -200,15 +309,15 @@ body {
 	.main-content {
 		-webkit-flex: 2 0 0;
 		-ms-flex: 2;
-   		flex: 2 0 0;
+	 		flex: 2 0 0;
 
-   		margin-left: 10px;
-   		margin-right: 10px;
+	 		margin-left: 10px;
+	 		margin-right: 10px;
 
 		.post-add {
 			background: #cecece;
-   			margin-top: 10px;
-   			box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+	 			margin-top: 10px;
+	 			box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 
 			#post-form {
 				margin: 0;
@@ -567,7 +676,7 @@ body {
 		.left-content { 
 			order: 1;
 			-webkit-flex: 1 0 0;
-		   	-ms-flex: 1;
+			 	-ms-flex: 1;
 			flex: 1 0 0;
 		}
 		.main-content {

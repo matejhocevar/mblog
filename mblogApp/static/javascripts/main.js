@@ -11,6 +11,7 @@ $(document).ready(function() {
 	});
 
 	initNewPost();
+	initSearch();
 });
 $(window).resize(function(){
 	$(".navigation").appendTo(".header-inner");
@@ -160,7 +161,6 @@ function initDropzone() {
 				e.preventDefault();
 				e.stopPropagation();
 				myDropzone.processQueue();
-				//myDropzone.removeAllFiles();
 			});
 
 			this.on("success", function(files, response){
@@ -205,13 +205,6 @@ function updateApp() {
 	updateDates();
 }
 
-function newBlogPost(displayName, username, time, location, content) {
-	var r = parseInt(Math.random() * 1000000, 10);
-	var newPost = '<article post-id="' + r + '" class="blog-post"><header><img class="profile-img" src="/assets/images/sample/mtx_50x50.jpg"><a href="/profile/' + username + '" class="post-author" rel="author"><h5><b>' + displayName + '</b> @' + username + '</h5></a><div class="post-date" data-post-date="' + time + '"></div><div class="post-location">' + location + '</div></header><p class="post-content">' + urls(content) + '</p></article>';
-	$(".articles").prepend(newPost).slideDown('slow');
-	dateMe($("[post-id='" + r + "'] .post-date"));
-}
-
 function updateDates() {
 	$(".post-date").each(function(i, el) {
 		dateMe(el);
@@ -245,5 +238,37 @@ function urls(str) {
 		},
 		truncate: 25,
 		hashtag: 'twitter'
+	});
+}
+
+function initSearch() {
+	var mblogSearch = new Bloodhound({
+		datumTokenizer: Bloodhound.tokenizers.obj.whitespace('username'),
+		queryTokenizer: Bloodhound.tokenizers.whitespace,
+		// TODO: prefetch: '../data/films/post_1960.json',
+		remote: {
+			url: '/search/%QUERY',
+			wildcard: '%QUERY'
+		}
+	});
+
+	$('.search .typeahead').typeahead(null, {
+		name: 'mblog-search',
+		display: 'username',
+		minLength: 3,
+		limit: 10,
+		hightlight: true,
+		source: mblogSearch,
+		templates: {
+			empty: [
+				'<div class="empty-message">',
+				'Unable to find any users that match the current query',
+				'</div>'
+			].join('\n'),
+			suggestion: function(data){
+				var isOne = data.profile__displayName.length<1?"one":"two";
+				return '<a href="/profile/' + data.username + '" class="search-element"><img width="32px" height="32px" class="user-thumbnail" src="' + data.profile__profileImage + '" alt="' + data.profile__displayName + '"/><div class="user-info ' + isOne + '"><h5>' + data.profile__displayName + '</h5><span class="username">@' + data.username + '</span></div></a>';
+			}
+		}
 	});
 }

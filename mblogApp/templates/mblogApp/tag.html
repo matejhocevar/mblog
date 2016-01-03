@@ -44,6 +44,10 @@
 			</section>
 
 			<aside class="right-content sidebar">
+				<section class="search">
+					<input class="typeahead" type="text" placeholder="Search">
+				</section>
+
 				<section class="subscribers">
 					{% include "mblogApp/subscribers.html" with subscribers=u.profile.followers.all %}
 				</section>
@@ -52,6 +56,7 @@
 {% endblock %}
 
 {% block javascript %}
+	<script src="{% static 'javascripts/vendor/typeahead.bundle.min.js' %}"></script>
 	<script src="{% static 'javascripts/vendor/moment.min.js' %}"></script>
 	<script src="{% static 'javascripts/vendor/autolinker.min.js' %}"></script>
 	<script src="{% static 'javascripts/vendor/dropzone.min.js' %}"></script>

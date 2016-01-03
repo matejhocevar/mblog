@@ -1,4 +1,6 @@
-from django.http import HttpResponseRedirect
+import json
+from django.core.serializers.json import DjangoJSONEncoder
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.contrib.auth.models import User
@@ -118,6 +120,17 @@ def tagController(request, tagname):
 	else:
 		form = PostForm(initial={'content': tag})
 		return render_to_response('mblogApp/tag.html', RequestContext(request, {'u': user, 'tag': tagname, 'posts': posts, 'form': form}))
+
+
+def searchController(request, query=None):
+	if query:
+		queryset = User.objects.filter(Q(username__contains=query) | Q(profile__displayName__contains=query)).values('username', 'profile__displayName', 'profile__profileImage')
+	else:
+		queryset = User.objects.values('username', 'profile__displayName', 'profile__profileImage')
+	serialized = json.dumps(list(queryset), cls=DjangoJSONEncoder)
+
+	return HttpResponse(serialized, content_type='application/json')
+
 
 def loginController(request):
 	if request.user.is_authenticated():
