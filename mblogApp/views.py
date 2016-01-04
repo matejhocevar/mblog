@@ -14,7 +14,7 @@ from django.db.models import Q
 from mblogApp.models import UserProfile, Post
 
 
-def index(request):
+def indexController(request):
 	user = None
 	if request.user.is_authenticated():
 		user = request.user

@@ -6,7 +6,7 @@ from mblogApp.views import *
 
 
 urlpatterns = patterns('',
-	url(r'^$', index),
+	url(r'^$', indexController),
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^login/$', loginController, name='loginController'),
