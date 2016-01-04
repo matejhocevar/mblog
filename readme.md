@@ -15,6 +15,7 @@
 
 ### Todo
 + user edit
++ user &group permissions
 + websockets
 + proper readme file
 + unit tests
