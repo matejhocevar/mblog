@@ -4,6 +4,9 @@ from mblogApp.models import UserProfile, Post
 from random import gauss
 from math import fabs, floor
 from django.utils import timezone
+import logging
+
+logger = logging.getLevelName(__name__)
 
 
 def fillUsers(number=50):
@@ -31,9 +34,11 @@ def fillUsers(number=50):
 			profile.webpage = faker.url()
 
 			users.append(profile.user)
+			logger.info("User %s successfully created." % profile.user)
 			profile.save()
 	except Exception as e:
-		print e.message
+		logger.error("Error occurred while trying to fill database with users. Message: %s" % e.message)
+
 		return None
 
 	return users
@@ -49,11 +54,12 @@ def fillSubscriptions(number):
 			u2 = user.random()
 
 			subscriptions.append("%s -> %s" % (u1.profile.displayName, u2.profile.displayName))
+			logger.info("User %s subscribed to user %s." % (u1.profile.displayName, u2.profile.displayName))
 			u1.profile.following.add(u2.profile)
 			u1.save()
 
 	except Exception as e:
-		print e.message
+		logger.error("Error occurred while trying to fill database with subscriptions. Message: %s" % e.message)
 		return None
 
 	return subscriptions
@@ -65,9 +71,6 @@ def fillPosts(number, authorId=None, time=None):
 
 	try:
 		for i in range(0, number):
-			if i % 100 == 0:
-				print "Adding %s. element" % i
-
 			p = Post()
 
 			if time == "now":
@@ -87,11 +90,12 @@ def fillPosts(number, authorId=None, time=None):
 			u.profile.posts.add(p)
 
 			posts.append("%s posted at %s in %s, %s" % (u.profile.displayName, p.postTime, p.locationTown, p.locationCountry))
+			logger.info("%s posted at %s in %s, %s" % (u.profile.displayName, p.postTime, p.locationTown, p.locationCountry))
 			u.save()
 			p.save()
 
 	except Exception as e:
-		print e.message
+		logger.error("Error occurred while trying to fill database with posts. Message: %s" % e.message)
 		return None
 
 	return posts

@@ -27,9 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -108,3 +106,48 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/static/media/'
+
+LOGIN_URL = '/login'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt': "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+	'handlers': {
+		'console': {
+			'class': 'logging.StreamHandler',
+			'formatter': 'simple'
+		},
+        'debug': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/full_app.log',
+            'formatter': 'verbose'
+        },
+		'info': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/mblog.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['debug'],
+            'propagate': True,
+            'level': 'DEBUG',
+        },
+        'mblogApp': {
+            'handlers': ['info', 'console'],
+            'level': 'DEBUG',
+        },
+    }
+}
