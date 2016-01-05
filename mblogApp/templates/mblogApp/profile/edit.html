@@ -1,0 +1,71 @@
+{% load staticfiles %}
+{% load humanize %}
+
+{{ form }}
+
+{% if u != None %}
+	<div class="user-info">
+		<div class="user-img">
+			<img alt="user profile picture" src="{{ MEDIA_URL }}{{ u.profile.profileImage }}">
+		</div>
+		<a href="/profile/{{ u.username }}">
+			<h5>{{ u.profile.displayName }}</h5>
+			<p class="username">@{{ u.username }}</p>
+		</a>
+	</div>
+
+	<div class="user-stats">
+		<div class="post-count stat-box">
+			<p class="stat-value">{{ u.profile.posts.count | intword }}</p>
+			<p class="stat-description">posts</p>
+		</div>
+		<div class="followers-count stat-box">
+			<p class="stat-value">{{ u.profile.following.count | intword }}</p>
+			<p class="stat-description">following</p>
+		</div>
+		<div class="subscribers-count stat-box">
+			<p class="stat-value">{{ u.profile.followers.count | intword }}</p>
+			<p class="stat-description">followers</p>
+		</div>
+	</div>
+
+	{% if u.profile.location %}
+	<div class="user-location">
+		<span class="location-icon icon-LocationMarker"></span>
+		{{ u.profile.location }}
+	</div>
+	{% endif %}
+
+	{% if u.profile.description %}
+	<div class="user-description">{{ u.profile.description }}</div>
+	{% endif %}
+
+	{% if u.profile.webpage %}
+		<div class="user-webpage">
+			<span class="link-icon icon-Link"></span>
+			<a href="{{ u.profile.webpage }}" target="_blank">{{ u.profile.webpage }}</a>
+		</div>
+	{% endif %}
+
+	{% if u.last_login %}
+	<div class="user-lastlogin">
+		<span class="location-icon icon-Padlock"></span>
+		Last login: {{ u.last_login | naturaltime }}
+	</div>
+	{% endif %}
+
+	<div class="subscribe-box">
+		<input type="button" id="subscribe-btn" class="button button-primary {{ subscriptionType|default:'nosubscribe' }}-btn" value="{{ subscriptionType|capfirst }}" />
+	</div>
+{% else %}
+	<div class="no-user">
+		<h4>Hello blogger!</h4>
+		<a href="/login">Login</a> or <a href="/register">Register</a> to
+		<ul>
+			<li>get your own personalized timeline</li>
+			<li>write your own posts</li>
+			<li>follow your favorite bloggers</li>
+		</ul>
+	</div>
+
+{% endif %}

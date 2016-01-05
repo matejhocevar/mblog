@@ -17,6 +17,7 @@ urlpatterns = patterns('',
 
 	url(r'^profile/$', profileController, name='profileController'),
 	url(r'^profile/(?P<username>\w{0,50})/$', profileController, name='profileController'),
+	url(r'^profile/(?P<username>\w{0,50})/edit/$', editProfileController, name='subscribeController'),
 	url(r'^profile/(?P<username>\w{0,50})/(?P<mode>\w{0,50})/$', subscribeController, name='subscribeController'),
 
 	url(r'^tag/(?P<tagname>\w{0,250})/$', tagController, name='tagController'),

@@ -61,3 +61,11 @@ class PostForm(forms.Form):
 				return country
 		except:
 			return None
+
+
+class ProfileEditForm(forms.Form):
+	displayName = forms.CharField(label="Name")
+	location = forms.CharField(label="Location")
+	description = forms.CharField(widget=forms.widgets.Textarea(attrs={}))
+	webpage = forms.URLField(label="Web page")
+	profileImage = forms.ImageField()

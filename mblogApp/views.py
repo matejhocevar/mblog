@@ -5,10 +5,11 @@ from django.shortcuts import render, render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from mblogApp.postServices import *
 from mblogApp.userServices import *
 from mblogApp.databaseServices import *
-from mblogApp.forms import RegistrationForm, LoginForm, PostForm
+from mblogApp.forms import *
 
 from django.db.models import Q
 from mblogApp.models import UserProfile, Post
@@ -32,10 +33,9 @@ def index(request):
 		return render_to_response('mblogApp/index.html', RequestContext(request, {'u': user, 'posts': posts, 'form': form}))
 
 
+@login_required(login_url='/login')
 def profileController(request, username):
-	loggedUser = None
-	if request.user.is_authenticated():
-		loggedUser = request.user
+	loggedUser = request.user
 
 	profileUser = get_object_or_404(User, username=username)
 
@@ -56,52 +56,65 @@ def profileController(request, username):
 		return render_to_response('mblogApp/profile/index.html', RequestContext(request, {'u': profileUser, 'subscriptionType': subscriptionType, 'posts': posts, 'form': form}))
 
 
+@login_required(login_url='/login')
+def editProfileController(request, username):
+	user = request.user.profile
+
+	profileUser = get_object_or_404(User, username=username)
+
+	if user != profileUser.profile:
+		return HttpResponseRedirect("/")
+
+	if request.method == 'POST':
+		pass
+	else:
+		data = {'displayName': user.displayName, 'location': user.location, 'description': user.description, 'webpage': user.webpage}
+		print data
+		form = ProfileEditForm(initial=data)
+		return render_to_response('mblogApp/profile/edit.html', RequestContext(request, {'u': user.user, 'form': form}))
+
+
+@login_required(login_url='/login')
 def postController(request):
-	if request.user.is_authenticated():
-		user = request.user
+	user = request.user
 
-		if request.is_ajax():
-			form = PostForm(request.POST)
-			if form.is_valid():
-				post = Post()
-				post.content = form.cleaned_data['content']
-				post.locationTown = form.cleaned_data['town']
-				post.locationCountry = form.cleaned_data['country']
-				post.postTime = timezone.now()
-				post.image = request.FILES.get('file')
-				user.profile.posts.add(post)
+	if request.is_ajax():
+		form = PostForm(request.POST)
+		if form.is_valid():
+			post = Post()
+			post.content = form.cleaned_data['content']
+			post.locationTown = form.cleaned_data['town']
+			post.locationCountry = form.cleaned_data['country']
+			post.postTime = timezone.now()
+			post.image = request.FILES.get('file')
+			user.profile.posts.add(post)
 
-				post.save()
-				user.save()
+			post.save()
+			user.save()
 
-				newForm = PostForm()
-				return render_to_response('mblogApp/post/addNew.html', RequestContext(request, {'u': user, 'form': newForm, 'status': "success"}))
-			else:
-				return render_to_response('mblogApp/post/addNew.html', RequestContext(request, {'u': user, 'form': form, 'status': "error"}))
+			newForm = PostForm()
+			return render_to_response('mblogApp/post/addNew.html', RequestContext(request, {'u': user, 'form': newForm, 'status': "success"}))
 		else:
-			return HttpResponseRedirect('/login')
+			return render_to_response('mblogApp/post/addNew.html', RequestContext(request, {'u': user, 'form': form, 'status': "error"}))
 	else:
 		return HttpResponseRedirect('/login')
-	return None
 
 
+@login_required(login_url='/login')
 def subscribeController(request, username=None, mode=None):
-	if request.user.is_authenticated():
-		me = request.user.profile
-		user = User.objects.get(username=username)
-		userProfile = user.profile
+	me = request.user.profile
+	user = User.objects.get(username=username)
+	userProfile = user.profile
 
-		if mode == "subscribe":
-			list = subscribe(user=userProfile, me=me)
-		elif mode == "unsubscribe":
-			list = unsubscribe(user=userProfile, me=me)
-		elif mode == "info":
-			st = getSubscribeStatus(loggedUser=me.user, profileUser=user)
-			return render_to_response('mblogApp/profile/info.html', RequestContext(request, {'u': user, 'subscriptionType': st}))
+	if mode == "subscribe":
+		list = subscribe(user=userProfile, me=me)
+	elif mode == "unsubscribe":
+		list = unsubscribe(user=userProfile, me=me)
+	elif mode == "info":
+		st = getSubscribeStatus(loggedUser=me.user, profileUser=user)
+		return render_to_response('mblogApp/profile/info.html', RequestContext(request, {'u': user, 'subscriptionType': st}))
 
-		return render_to_response('mblogApp/subscribers.html', RequestContext(request, {'subscribers': list}))
-	else:
-		return render_to_response('mblogApp/login/index.html', RequestContext(request, {}))
+	return render_to_response('mblogApp/subscribers.html', RequestContext(request, {'subscribers': list}))
 
 
 def tagController(request, tagname):
@@ -186,6 +199,7 @@ def infinityPostController(request):
 	return render(request, 'mblogApp/post/post.html')
 
 
+@login_required(login_url='/login')
 def fillController(request, model=None, number=None, author=None, time=None):
 	number = int(number)
 
