@@ -93,10 +93,10 @@ def postController(request):
 			user.save()
 
 			newForm = PostForm()
-				logger.info("User %s created new post." % user.username)
+			logger.info("User %s created new post." % user.username)
 			return render_to_response('mblogApp/post/addNew.html', RequestContext(request, {'u': user, 'form': newForm, 'status': "success"}))
 		else:
-				logger.error("User %s failed to create new post." % user.username)
+			logger.error("User %s failed to create new post." % user.username)
 			return render_to_response('mblogApp/post/addNew.html', RequestContext(request, {'u': user, 'form': form, 'status': "error"}))
 	else:
 		return HttpResponseRedirect('/login')

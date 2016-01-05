@@ -1,19 +1,21 @@
 # mblog
-> Micro blog created with django framework
+> Micro blog created with django framework \n
 
-### Prerequisites
+Main purpose of this project is to build django reference point and to learn good django code practices
+
+## Prerequisites
 	Coming soon...
 
-### Installation
+## Installation
 	Coming soon...
 
-### Usage
+## Usage
 	Coming soon...
 
-### Heroku deploy
+## Heroku deploy
 	Coming soon...
 
-### Todo
+## Todo
 + user edit
 + user &group permissions
 + websockets
@@ -23,8 +25,8 @@
 + stress tests
 + code refactoring
 
-### Author
+## Author
 	Coming soon...
 
-### License
+## License
 	Coming soon...
