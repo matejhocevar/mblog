@@ -1,5 +1,5 @@
 env/
 .idea/
 *.pyc
-mblog/settings.py
 mblogApp/static/media/*
+*.log

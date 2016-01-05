@@ -11,11 +11,11 @@
 {% endblock %}
 
 {% block body %}
-		{% include "mblogApp/navigation.html" with u=u %}
+		{% include "mblogApp/navigation.html" with u=request.user %}
 
 		<main class="row container clear">
 			<section class="main-content">
-				{% include "mblogApp/post/addNew.html" with u=u mention=u form=form %}
+				{% include "mblogApp/post/addNew.html" with u=u form=form %}
 
 				<div class="articles">
 					{% include "mblogApp/post/post.html" with posts=posts %}
