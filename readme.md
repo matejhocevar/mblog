@@ -1,5 +1,5 @@
 # mblog
-> Micro blog created with django framework \n
+> Micro blog created with django framework
 
 Main purpose of this project is to build django reference point and to learn good django code practices
 
