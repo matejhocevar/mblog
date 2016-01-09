@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	var updateInterval = 2 * 1000;
+	var updateInterval = 10 * 1000;
 
 	updateApp();
 	setInterval(function(){
@@ -78,11 +78,9 @@ function initNewPost() {
 			processData: false,
 			success: function(response){
 				$(".post-add").html(response);
-				myDropzone.removeAllFiles();
 			},
 			error: function(response){
 				$(".post-add").html(response);
-				myDropzone.removeAllFiles();
 			}
 		});
 	});
@@ -205,6 +203,7 @@ function infinityScroll() {
 }
 
 function updateApp() {
+	updatePosts();
 	updateLinks();
 	updateDates();
 }
@@ -249,7 +248,6 @@ function initSearch() {
 	var mblogSearch = new Bloodhound({
 		datumTokenizer: Bloodhound.tokenizers.obj.whitespace('username'),
 		queryTokenizer: Bloodhound.tokenizers.whitespace,
-		// TODO: prefetch: '../data/films/post_1960.json',
 		remote: {
 			url: '/search/%QUERY',
 			wildcard: '%QUERY'
@@ -292,6 +290,19 @@ function editProfile(save, username) {
 		data: data,
 		success: function(response){
 			$(".profile-summery").html(response);
+		}
+	});
+}
+
+function updatePosts() {
+	var lastUpdate = $(".articles .blog-post header .post-date").attr("data-post-date") || null;
+
+	$.ajax({
+		url: "/post/load/",
+		method: "GET",
+		data: {"lastUpdate": lastUpdate},
+		success: function(response){
+			$(".articles").prepend(response).slideDown('slow');;
 		}
 	});
 }

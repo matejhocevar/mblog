@@ -16,10 +16,11 @@
 	</div>
 	{% endif %}
 </article>
-{% empty %}
+{% if empty and not update %}
 	<article class="blog-post">No posts available.</article>
+{% endif %}
 {% endfor %}
-{% if posts and not posts.has_next %}
+{% if posts and not posts.has_next and not update %}
 	<article class="blog-post">No more posts available.</article>
 {% endif %}
 <div class="pagination">

@@ -17,7 +17,6 @@ Main purpose of this project is to build django reference point and to learn goo
 
 ## Todo
 + user &group permissions
-+ websockets
 + proper readme file
 + unit tests
 + regression tests

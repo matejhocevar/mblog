@@ -1,4 +1,6 @@
 import json, logging
+from datetime import timedelta
+from django.utils import dateparse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, render_to_response, get_object_or_404
@@ -30,8 +32,7 @@ def indexController(request):
 		return render_to_response('mblogApp/post/post.html', RequestContext(request, {'posts': posts}))
 	else:
 		form = PostForm()
-		canEdit = True
-		return render_to_response('mblogApp/index.html', RequestContext(request, {'u': user, 'posts': posts, 'form': form, 'canEdit': canEdit}))
+		return render_to_response('mblogApp/index.html', RequestContext(request, {'u': user, 'posts': posts, 'form': form, 'canEdit': True}))
 
 
 @login_required(login_url='/login')
@@ -216,8 +217,21 @@ def noJSController(request):
 	return render(request, 'mblogApp/nojavascript.html')
 
 
+@ajax_required
 def infinityPostController(request):
-	return render(request, 'mblogApp/post/post.html')
+	try:
+		lastUpdate = dateparse.parse_datetime(request.GET['lastUpdate']) + timedelta(minutes=1)
+	except:
+		return None
+
+	if request.user.is_authenticated():
+		user = request.user
+		posts = Post.objects.filter((Q(author__in=user.profile.following.all()) | Q(author=user.profile)) & Q(postTime__gt=lastUpdate)).order_by("postTime").reverse()
+	else:
+		posts = Post.objects.filter(postTime__gt=lastUpdate).order_by("postTime").reverse()
+
+	return render_to_response('mblogApp/post/post.html', RequestContext(request, {'posts': posts, 'update': True}))
+
 
 
 @login_required(login_url='/login')
