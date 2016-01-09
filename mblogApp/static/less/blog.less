@@ -152,7 +152,32 @@ body {
 			}
 		}
 
-		.profile-summery {
+		.profile-summery {	
+			.user-edit {
+				button {
+					position: relative;
+					top: -5px;
+					right: -5px;
+					padding: 0;
+					background: 0;
+					border: 0;
+					float: right;
+
+					&:active, &:focus {
+						outline: 0;
+					}
+					
+					.edit-icon {
+						font-size: 1.8em;
+						opacity: 0.5;
+
+						&:hover {
+							opacity: 1;
+						}
+					}
+				}
+			}
+
 			.user-info {
 				display: -webkit-flex;
 				display: -ms-flexbox;
@@ -172,7 +197,7 @@ body {
 				}
 
 
-				a {
+				a, .link-holder {
 					-webkit-flex: 2 0 0;
 					-ms-flex: 2;
 					flex: 2 0 0;
@@ -261,6 +286,35 @@ body {
 				}
 				ul {
 					padding-left: 20px;
+				}
+			}
+
+			#profile-edit {
+				#id_displayName {
+					width: 100%;
+				}
+
+				#id_description, #id_webpage {
+					width: calc(100% - 10px);
+				}
+
+				#id_description {
+					resize: vertical;
+					height: 100px;
+					word-break: break-word;
+				}
+
+				#save-profile {
+    				display: block;
+					margin: 10px auto 0;
+					background: @base-link-color;
+					color: #fff;
+					border: 0;
+					text-align: center;
+
+					&:active, &:focus {
+						outline: 0;
+					}
 				}
 			}
 		}

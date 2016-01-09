@@ -30,7 +30,8 @@ def indexController(request):
 		return render_to_response('mblogApp/post/post.html', RequestContext(request, {'posts': posts}))
 	else:
 		form = PostForm()
-		return render_to_response('mblogApp/index.html', RequestContext(request, {'u': user, 'posts': posts, 'form': form}))
+		canEdit = True
+		return render_to_response('mblogApp/index.html', RequestContext(request, {'u': user, 'posts': posts, 'form': form, 'canEdit': canEdit}))
 
 
 @login_required(login_url='/login')
@@ -57,6 +58,7 @@ def profileController(request, username):
 
 
 @login_required(login_url='/login')
+@ajax_required
 def editProfileController(request, username):
 	user = request.user.profile
 
@@ -66,43 +68,53 @@ def editProfileController(request, username):
 		return HttpResponseRedirect("/")
 
 	if request.method == 'POST':
-		pass
+		form = ProfileEditForm(request.POST)
+		if form.is_valid():
+			user.displayName = form.cleaned_data['displayName']
+			user.location = form.cleaned_data['location']
+			user.description = form.cleaned_data['description']
+			user.webpage = form.cleaned_data['webpage']
+
+			user.save()
+			logger.info("User %s successfully changed his profile." % user.username)
+			return render_to_response('mblogApp/profile/info.html', RequestContext(request, {'u': user.user, 'canEdit': True}))
+		else:
+			logger.warning("User %s failed to changed his profile." % user.username)
+			return render_to_response('mblogApp/profile/edit.html', RequestContext(request, {'u': user.user, 'form': form}))
 	else:
 		data = {'displayName': user.displayName, 'location': user.location, 'description': user.description, 'webpage': user.webpage}
-		print data
 		form = ProfileEditForm(initial=data)
 		return render_to_response('mblogApp/profile/edit.html', RequestContext(request, {'u': user.user, 'form': form}))
 
 
 @login_required(login_url='/login')
+@ajax_required
 def postController(request):
 	user = request.user
 
-	if request.is_ajax():
-		form = PostForm(request.POST)
-		if form.is_valid():
-			post = Post()
-			post.content = form.cleaned_data['content']
-			post.locationTown = form.cleaned_data['town']
-			post.locationCountry = form.cleaned_data['country']
-			post.postTime = timezone.now()
-			post.image = request.FILES.get('file')
-			user.profile.posts.add(post)
+	form = PostForm(request.POST)
+	if form.is_valid():
+		post = Post()
+		post.content = form.cleaned_data['content']
+		post.locationTown = form.cleaned_data['town']
+		post.locationCountry = form.cleaned_data['country']
+		post.postTime = timezone.now()
+		post.image = request.FILES.get('file')
+		user.profile.posts.add(post)
 
-			post.save()
-			user.save()
+		post.save()
+		user.save()
 
-			newForm = PostForm()
-			logger.info("User %s created new post." % user.username)
-			return render_to_response('mblogApp/post/addNew.html', RequestContext(request, {'u': user, 'form': newForm, 'status': "success"}))
-		else:
-			logger.error("User %s failed to create new post." % user.username)
-			return render_to_response('mblogApp/post/addNew.html', RequestContext(request, {'u': user, 'form': form, 'status': "error"}))
+		newForm = PostForm()
+		logger.info("User %s created new post." % user.username)
+		return render_to_response('mblogApp/post/addNew.html', RequestContext(request, {'u': user, 'form': newForm, 'status': "success"}))
 	else:
-		return HttpResponseRedirect('/login')
+		logger.error("User %s failed to create new post." % user.username)
+		return render_to_response('mblogApp/post/addNew.html', RequestContext(request, {'u': user, 'form': form, 'status': "error"}))
 
 
 @login_required(login_url='/login')
+@ajax_required
 def subscribeController(request, username=None, mode=None):
 	me = request.user.profile
 	user = User.objects.get(username=username)
@@ -137,6 +149,7 @@ def tagController(request, tagname):
 		return render_to_response('mblogApp/tag.html', RequestContext(request, {'u': user, 'tag': tagname, 'posts': posts, 'form': form}))
 
 
+@ajax_required
 def searchController(request, query=None):
 	if query:
 		queryset = User.objects.filter(Q(username__contains=query) | Q(profile__displayName__contains=query)).values('username', 'profile__displayName', 'profile__profileImage')

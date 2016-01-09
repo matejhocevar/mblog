@@ -64,6 +64,7 @@ function initNewPost() {
 
 	$("#post-form").submit(function(e){
 		e.preventDefault();
+		e.stopPropagation();
 		parseLocation(getLocation());
 
 		var data = new FormData($('#post-form').get(0));
@@ -84,8 +85,6 @@ function initNewPost() {
 				myDropzone.removeAllFiles();
 			}
 		});
-
-
 	});
 }
 
@@ -160,7 +159,12 @@ function initDropzone() {
 			this.element.querySelector("#submitPost").addEventListener("click", function(e) {
 				e.preventDefault();
 				e.stopPropagation();
-				myDropzone.processQueue();
+
+				if(myDropzone.getQueuedFiles().length > 0) {
+					myDropzone.processQueue();
+				} else {
+					$("#submitPost").submit();
+				}
 			});
 
 			this.on("success", function(files, response){
@@ -269,6 +273,25 @@ function initSearch() {
 				var isOne = data.profile__displayName.length<1?"one":"two";
 				return '<a href="/profile/' + data.username + '" class="search-element"><img width="32px" height="32px" class="user-thumbnail" src="' + data.profile__profileImage + '" alt="' + data.profile__displayName + '"/><div class="user-info ' + isOne + '"><h5>' + data.profile__displayName + '</h5><span class="username">@' + data.username + '</span></div></a>';
 			}
+		}
+	});
+}
+
+function editProfile(save, username) {
+	var editUrl = "/profile/" + username + "/edit/";
+	var method = save?"POST":"GET";
+	var data = "";
+
+	if(save) {
+		data = $("#profile-edit").serializeArray();
+	}
+
+	$.ajax({
+		url: editUrl,
+		method: method,
+		data: data,
+		success: function(response){
+			$(".profile-summery").html(response);
 		}
 	});
 }

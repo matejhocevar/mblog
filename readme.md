@@ -16,7 +16,6 @@ Main purpose of this project is to build django reference point and to learn goo
 	Coming soon...
 
 ## Todo
-+ user edit
 + user &group permissions
 + websockets
 + proper readme file

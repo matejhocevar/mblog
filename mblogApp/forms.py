@@ -64,8 +64,28 @@ class PostForm(forms.Form):
 
 
 class ProfileEditForm(forms.Form):
-	displayName = forms.CharField(label="Name")
-	location = forms.CharField(label="Location")
-	description = forms.CharField(widget=forms.widgets.Textarea(attrs={}))
-	webpage = forms.URLField(label="Web page")
-	profileImage = forms.ImageField()
+	displayName = forms.CharField(label="Name", required=False)
+	location = forms.CharField(label="Location", required=False)
+	description = forms.CharField(label="Description", required=False, widget=forms.widgets.Textarea(attrs={'cols': 'auto', 'rows': 'auto'}))
+	webpage = forms.URLField(label="Web page", required=False)
+	profileImage = forms.ImageField(required=False)
+
+from django.http import HttpResponseBadRequest
+
+def ajax_required(f):
+    """
+    AJAX request required decorator
+    use it in your views:
+
+    @ajax_required
+    def my_view(request):
+        ....
+
+    """
+    def wrap(request, *args, **kwargs):
+            if not request.is_ajax():
+                return HttpResponseBadRequest()
+            return f(request, *args, **kwargs)
+    wrap.__doc__=f.__doc__
+    wrap.__name__=f.__name__
+    return wrap

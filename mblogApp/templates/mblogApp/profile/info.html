@@ -2,6 +2,14 @@
 {% load humanize %}
 
 {% if u != None %}
+
+	<div class="user-edit">
+	{% if canEdit %}
+		<button onclick="editProfile(false, '{{ u.username }}')"><span class="edit-icon icon-CreateNew"></span></button>
+	{% endif %}
+	</div>
+
+
 	<div class="user-info">
 		<div class="user-img">
 			<img alt="user profile picture" src="{{ MEDIA_URL }}{{ u.profile.profileImage }}">
