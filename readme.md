@@ -55,7 +55,4 @@ on Unix:
 + stress tests
 
 ## Author
-	Coming soon...
-
-### Author
 Matej Hocevar [@matoxxx](https://github.com/matoxxx)
