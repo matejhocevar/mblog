@@ -11,8 +11,8 @@ class RegistrationForm(ModelForm):
 	confirmPassword = forms.CharField(label="Confirm password", max_length=100, widget=forms.PasswordInput)
 
 	class Meta:
-		model = UserProfile
-		exclude = ('',)
+		model = User
+		exclude = ('date_joined',)
 
 	def clean_username(self):
 		username = self.cleaned_data["username"]
@@ -25,7 +25,9 @@ class RegistrationForm(ModelForm):
 	def clean(self):
 		try:
 			if self.cleaned_data['password'] != self.cleaned_data['confirmPassword']:
+				self.add_error('password', forms.ValidationError("The passwords did not match. Please try again."))
 				raise forms.ValidationError("The passwords did not match. Please try again.")
+
 			return self.cleaned_data
 		except:
 			raise forms.ValidationError("Password is required.")

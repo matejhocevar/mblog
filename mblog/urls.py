@@ -1,16 +1,15 @@
-from django.conf.urls import include, url, patterns
-from django.conf.urls.static import static
-from django.conf import settings
+from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.auth.views import logout
 from mblogApp.views import *
 
 
-urlpatterns = patterns('',
+urlpatterns = [
 	url(r'^$', indexController),
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^login/$', loginController, name='loginController'),
-    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
+    url(r'^logout/$', logout, {'next_page': '/'}),
     url(r'^register/$', registerController, name='registerController'),
 
 	url(r'^nojavascript$', noJSController, name='noJSController'),
@@ -30,6 +29,6 @@ urlpatterns = patterns('',
 	url(r'^fill/(?P<model>\w{0,20})/(?P<number>\d{0,10})/$', fillController, name='fillController'),
 	url(r'^fill/(?P<model>\w{0,20})/(?P<number>\d{0,10})/(?P<author>\d{0,10})/$', fillController, name='fillController'),
 	url(r'^fill/(?P<model>\w{0,20})/(?P<number>\d{0,10})/(?P<author>\d{0,10})/(?P<time>\w{0,20})/$', fillController, name='fillController'),
-)
+]
 
 

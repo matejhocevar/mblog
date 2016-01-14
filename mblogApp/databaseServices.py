@@ -54,12 +54,12 @@ def fillSubscriptions(number):
 			u2 = user.random()
 
 			subscriptions.append("%s -> %s" % (u1.profile.displayName, u2.profile.displayName))
-			logger.info("User %s subscribed to user %s." % (u1.profile.displayName, u2.profile.displayName))
+			# logger.info("User %s subscribed to user %s." % (u1.profile.displayName, u2.profile.displayName))
 			u1.profile.following.add(u2.profile)
 			u1.save()
 
-	except Exception as e:
-		logger.error("Error occurred while trying to fill database with subscriptions. Message: %s" % e.message)
+	except Exception:
+		logger.error("Error occurred while trying to fill database with subscriptions")
 		return None
 
 	return subscriptions

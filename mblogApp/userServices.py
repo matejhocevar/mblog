@@ -45,3 +45,4 @@ def unsubscribe(user=None, me=None):
 
 		logger.info("User %s successfully unsubscribed to user %s." %(me, user))
 		return user.followers.all()
+

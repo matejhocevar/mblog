@@ -3,7 +3,7 @@ $(document).ready(function() {
 
 	updateApp();
 	updateProfile();
-	
+
 	setInterval(function(){
 		updateApp();
 	}, updateInterval);

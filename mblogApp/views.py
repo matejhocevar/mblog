@@ -77,10 +77,10 @@ def editProfileController(request, username):
 			user.webpage = form.cleaned_data['webpage']
 
 			user.save()
-			logger.info("User %s successfully changed his profile." % user.username)
+			logger.info("User %s successfully changed his profile." % request.user.username)
 			return render_to_response('mblogApp/profile/info.html', RequestContext(request, {'u': user.user, 'canEdit': True}))
 		else:
-			logger.warning("User %s failed to changed his profile." % user.username)
+			logger.warning("User %s failed to changed his profile." % request.user.username)
 			return render_to_response('mblogApp/profile/edit.html', RequestContext(request, {'u': user.user, 'form': form}))
 	else:
 		data = {'displayName': user.displayName, 'location': user.location, 'description': user.description, 'webpage': user.webpage}
@@ -205,7 +205,7 @@ def registerController(request):
 			logger.info("New account created with username %s." % user.username)
 			return render_to_response('mblogApp/login/login.html', RequestContext(request, {'form': form}))
 		else:
-			logger.error("Error while creating new account with username %s." % request.user.username)
+			logger.error("Error while creating new account.")
 			return render_to_response('mblogApp/login/register.html', RequestContext(request, {'form': form}))
 
 	else:
