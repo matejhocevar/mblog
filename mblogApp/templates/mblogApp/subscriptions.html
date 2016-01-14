@@ -6,7 +6,11 @@
     <li class="subscription-item">
 		<a href="/profile/{{ sub.user.username }}">
 			<img src="{{ sub.profileImage }}" width="20" height="20" alt="{{ sub.displayName }}" />
-			<p>{{ sub.displayName }}</p>
+			<p>{% if sub.displayName|length > 0 %}
+				{{ sub.displayName }}
+			{% else %}
+				{{ sub.user.username }}
+			{% endif %}</p>
 		</a>
 	</li>
 	{% empty %}

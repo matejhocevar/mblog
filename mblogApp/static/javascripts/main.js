@@ -2,6 +2,8 @@ $(document).ready(function() {
 	var updateInterval = 10 * 1000;
 
 	updateApp();
+	updateProfile();
+	
 	setInterval(function(){
 		updateApp();
 	}, updateInterval);
@@ -225,6 +227,10 @@ function updateLinks() {
 	});
 }
 
+function updateProfile() {
+	$(".user-description").html(urls($(".user-description").text()));
+}
+
 function urls(str) {
 	return Autolinker.link( str, {
 		replaceFn : function( autolinker, match ) {
@@ -290,6 +296,10 @@ function editProfile(save, username) {
 		data: data,
 		success: function(response){
 			$(".profile-summery").html(response);
+			updateProfile();
+		},
+		error: function(response) {
+			console.log(response);
 		}
 	});
 }
