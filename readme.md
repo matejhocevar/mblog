@@ -4,7 +4,9 @@
 Main purpose of this project is to build django reference point and to learn good django code practices
 
 ## Prerequisites
-	Coming soon...
+	virtualenv
+	pip
+	django
 
 ## Installation
 	git clone https://github.com/matoxxx/mblog.git
@@ -43,19 +45,23 @@ on Unix:
 ##### Create fixtures
 	python manage.py dumpdata auth.user mblogApp > mblogApp/fixtures/mblogapp.json
 
-#### Testing application
+## Testing
+
+##### Functional tests
 	python manage.py test
 
-## Heroku deploy
-	Coming soon...
+##### Stress tests:
+Download gevent - http://www.lfd.uci.edu/~gohlke/pythonlibs/#gevent
+
+	pip install gevent-1.0.2-cp27-none-win_amd64.whl
+	pip install locustio
+
+	locust -f stress.py --host=http://localhost
+
+Visit [locust dashboard](http://127.0.0.1:8089/)
 
 ## Todo
 + user & group permissions
-+ proper readme file
-+ stress tests
-
-## Author
-	Coming soon...
 
 ### Author
 Matej Hocevar [@matoxxx](https://github.com/matoxxx)
